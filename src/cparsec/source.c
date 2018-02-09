@@ -24,7 +24,7 @@ Val Source_next( Source* src )
   if ( ret.type != ERROR ) {
     ++(src->s);
     ++(src->col);
-    if ( ret.value.c == '\n' ) {
+    if ( ret.c == '\n' ) {
       ++(src->line);
       src->col = 1;
     }

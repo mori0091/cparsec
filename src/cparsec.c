@@ -10,8 +10,8 @@ void Val_del( Val* x )
 {
   if ( x ) {
     if ( x->del ) {
-      x->del( x->value.ptr );
-      x->value.ptr = 0;
+      x->del( x->ptr );
+      x->ptr = 0;
     }
   }
 }
@@ -21,28 +21,28 @@ void Val_print( Val* x )
   assert( x );
   switch ( x->type ) {
   case ERROR:
-    printf( "parse error: %s\n", x->value.error );
+    printf( "parse error: %s\n", x->error );
     break;
   case CHAR:
-    printf( "%c\n", x->value.c );
+    printf( "%c\n", x->c );
     break;
   case INT:
-    printf( "%d\n", x->value.i );
+    printf( "%d\n", x->i );
     break;
   case DOUBLE:
-    printf( "%f\n", x->value.d );
+    printf( "%f\n", x->d );
     break;
   case PTR:
-    printf( "%p\n", x->value.ptr );
+    printf( "%p\n", x->ptr );
     break;
   case STRING:
-    printf( "%s\n", x->value.str );
+    printf( "%s\n", x->str );
     break;
   case PARSER:
-    printf( "Parser(%p)\n", x->value.ptr );
+    printf( "Parser(%p)\n", x->ptr );
     break;
   case PREDICATE:
-    printf( "Predicate(%p)\n", x->value.ptr );
+    printf( "Predicate(%p)\n", x->ptr );
     break;
   default:
     printf( "Unknown value\n" );

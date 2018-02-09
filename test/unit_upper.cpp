@@ -10,7 +10,7 @@ SCENARIO( "'upper' parser", "[cparsec]" ) {
     Val result = parse( upper, NULL );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -18,7 +18,7 @@ SCENARIO( "'upper' parser", "[cparsec]" ) {
     Val result = parse( upper, "" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -26,7 +26,7 @@ SCENARIO( "'upper' parser", "[cparsec]" ) {
     Val result = parse( upper, "0" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -34,7 +34,7 @@ SCENARIO( "'upper' parser", "[cparsec]" ) {
     Val result = parse( upper, "1" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -42,7 +42,7 @@ SCENARIO( "'upper' parser", "[cparsec]" ) {
     Val result = parse( upper, "2" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -50,7 +50,7 @@ SCENARIO( "'upper' parser", "[cparsec]" ) {
     Val result = parse( upper, "3" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -58,7 +58,7 @@ SCENARIO( "'upper' parser", "[cparsec]" ) {
     Val result = parse( upper, "4" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -66,7 +66,7 @@ SCENARIO( "'upper' parser", "[cparsec]" ) {
     Val result = parse( upper, "5" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -74,7 +74,7 @@ SCENARIO( "'upper' parser", "[cparsec]" ) {
     Val result = parse( upper, "6" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -82,7 +82,7 @@ SCENARIO( "'upper' parser", "[cparsec]" ) {
     Val result = parse( upper, "7" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -90,7 +90,7 @@ SCENARIO( "'upper' parser", "[cparsec]" ) {
     Val result = parse( upper, "8" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -98,7 +98,7 @@ SCENARIO( "'upper' parser", "[cparsec]" ) {
     Val result = parse( upper, "9" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -106,7 +106,7 @@ SCENARIO( "'upper' parser", "[cparsec]" ) {
     Val result = parse( upper, "a" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -114,7 +114,7 @@ SCENARIO( "'upper' parser", "[cparsec]" ) {
     Val result = parse( upper, "z" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -122,7 +122,7 @@ SCENARIO( "'upper' parser", "[cparsec]" ) {
     Val result = parse( upper, "A" );
     THEN( "result is (char)'A'" ) {
       REQUIRE( CHAR == result.type );
-      REQUIRE( 'A' == result.value.c );
+      REQUIRE( 'A' == result.c );
     }
     Val_del( &result );
   }
@@ -130,7 +130,7 @@ SCENARIO( "'upper' parser", "[cparsec]" ) {
     Val result = parse( upper, "Z" );
     THEN( "result is (char)'Z'" ) {
       REQUIRE( CHAR == result.type );
-      REQUIRE( 'Z' == result.value.c );
+      REQUIRE( 'Z' == result.c );
     }
     Val_del( &result );
   }
@@ -138,7 +138,7 @@ SCENARIO( "'upper' parser", "[cparsec]" ) {
     Val result = parse( upper, "_" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -146,7 +146,7 @@ SCENARIO( "'upper' parser", "[cparsec]" ) {
     Val result = parse( upper, "!" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }

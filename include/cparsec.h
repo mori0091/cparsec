@@ -22,14 +22,14 @@
 
 //// macros of various initializer of Val
 #define      NONE_VAL_INIT       { 0 }
-#define     ERROR_VAL_INIT( x )  { .type = ERROR    , .value.error     = (x), .del = 0 }
-#define      CHAR_VAL_INIT( x )  { .type = CHAR     , .value.c         = (x), .del = 0 }
-#define       INT_VAL_INIT( x )  { .type = INT      , .value.i         = (x), .del = 0 }
-#define    DOUBLE_VAL_INIT( x )  { .type = DOUBLE   , .value.d         = (x), .del = 0 }
-#define       PTR_VAL_INIT( x )  { .type = PTR      , .value.ptr       = (x), .del = 0 }
-#define    STRING_VAL_INIT( x )  { .type = STRING   , .value.str       = (x), .del = 0 }
-#define    PARSER_VAL_INIT( x )  { .type = PARSER   , .value.parser    = (x), .del = 0 }
-#define PREDICATE_VAL_INIT( x )  { .type = PREDICATE, .value.predicate = (x), .del = 0 }
+#define     ERROR_VAL_INIT( x )  { .type = ERROR    , .error     = (x), .del = 0 }
+#define      CHAR_VAL_INIT( x )  { .type = CHAR     , .c         = (x), .del = 0 }
+#define       INT_VAL_INIT( x )  { .type = INT      , .i         = (x), .del = 0 }
+#define    DOUBLE_VAL_INIT( x )  { .type = DOUBLE   , .d         = (x), .del = 0 }
+#define       PTR_VAL_INIT( x )  { .type = PTR      , .ptr       = (x), .del = 0 }
+#define    STRING_VAL_INIT( x )  { .type = STRING   , .str       = (x), .del = 0 }
+#define    PARSER_VAL_INIT( x )  { .type = PARSER   , .parser    = (x), .del = 0 }
+#define PREDICATE_VAL_INIT( x )  { .type = PREDICATE, .predicate = (x), .del = 0 }
 
 //// macros of various compound literal of Val, whose value must be deallocated
 #define        D_ERROR_VAL( x )  (Val)D_ERROR_VAL_INIT((x))
@@ -38,10 +38,10 @@
 #define       D_PARSER_VAL( x )  (Val)D_STRING_VAL_INIT((x))
 
 //// macros of various initializer of Val, whose value must be deallocated
-#define   D_ERROR_VAL_INIT( x )  { .type = ERROR    , .value.str       = (x), .del = free }
-#define     D_PTR_VAL_INIT( x )  { .type = PTR      , .value.ptr       = (x), .del = free }
-#define  D_STRING_VAL_INIT( x )  { .type = STRING   , .value.str       = (x), .del = free }
-#define  D_PARSER_VAL_INIT( x )  { .type = PARSER   , .value.parser    = (x), .del = (Deallocator)Parser_del }
+#define   D_ERROR_VAL_INIT( x )  { .type = ERROR    , .str       = (x), .del = free }
+#define     D_PTR_VAL_INIT( x )  { .type = PTR      , .ptr       = (x), .del = free }
+#define  D_STRING_VAL_INIT( x )  { .type = STRING   , .str       = (x), .del = free }
+#define  D_PARSER_VAL_INIT( x )  { .type = PARSER   , .parser    = (x), .del = (Deleter)Parser_del }
 
 #ifdef __cplusplus
 extern "C" {
@@ -49,9 +49,9 @@ extern "C" {
 
   typedef struct ParserSt* Parser;
   typedef bool (*Predicate)( char );
-  typedef void (*Deallocator)( void* );
+  typedef void (*Deleter)( void* );
 
-  enum ValT {
+  enum ValType {
     ERROR,			///< const char* error
     CHAR,			///< char c
     INT,			///< int i
@@ -62,23 +62,21 @@ extern "C" {
     PREDICATE,			///< Predicate predicate
   };
 
-  union ValD {
-    const char* error;
-    char        c;
-    int         i;
-    double      d;
-    void*       ptr;
-    const char* str;
-    Parser      parser;
-    Predicate   predicate;
-  };
-
   typedef struct Val Val;
 
   struct Val {
-    enum  ValT  type;
-    union ValD  value;
-    Deallocator del;
+    enum  ValType  type;
+    union {
+      const char* error;
+      char        c;
+      int         i;
+      double      d;
+      void*       ptr;
+      const char* str;
+      Parser      parser;
+      Predicate   predicate;
+    };
+    Deleter del;
   };
 
   void Val_del( Val* x );
