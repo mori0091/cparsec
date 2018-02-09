@@ -2,10 +2,10 @@
 
 #pragma once
 
-#ifndef CPARSEC_STRING1_H
-#define CPARSEC_STRING1_H
+#ifndef CPARSEC_PRIMITIVE_STRING1_H
+#define CPARSEC_PRIMITIVE_STRING1_H
 
-#include "cparsec/gen_parser_string.h"
+#include "cparsec/gen_parser/string.h"
 
 #define STRING1( x )            STRING( string1, (x) )
 #define STRING1_ST( x )         STRING_ST( string1, (x) )
@@ -21,4 +21,4 @@ extern "C" {
 }
 #endif
 
-#endif	/* CPARSEC_STRING1_H */
+#endif	/* CPARSEC_PRIMITIVE_STRING1_H */

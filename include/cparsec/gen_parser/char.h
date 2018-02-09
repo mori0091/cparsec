@@ -2,11 +2,11 @@
 
 #pragma once
 
-#ifndef CPARSEC_GEN_PARSER_CHAR_H
-#define CPARSEC_GEN_PARSER_CHAR_H
+#ifndef CPARSEC_CORE_GEN_PARSER_CHAR_H
+#define CPARSEC_CORE_GEN_PARSER_CHAR_H
 
 #include "cparsec.h"
-#include "cparsec/parser.h"
+#include "cparsec/core/parser.h"
 
 //// Constructs ParserSt< T (char) >
 #define CHAR( name, x )            &(CHAR_ST( name, (x) ))
@@ -38,4 +38,4 @@ extern "C" {
 }
 #endif
 
-#endif	/* CPARSEC_GEN_PARSER_CHAR_H */
+#endif	/* CPARSEC_CORE_GEN_PARSER_CHAR_H */

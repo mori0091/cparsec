@@ -1,6 +1,7 @@
 /* -*- mode: c++ ; coding: utf-8-unix -*- */
 
-#include "cparsec/parser.h"
+#include "cparsec/core/parser.h"
+#include "cparsec/core/val.h"
 
 Parser Parser_new( void )
 {

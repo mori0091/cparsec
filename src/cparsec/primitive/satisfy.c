@@ -1,6 +1,6 @@
 /* -*- mode: c++ ; coding: utf-8-unix -*- */
 
-#include "cparsec/satisfy.h"
+#include "cparsec/primitive/satisfy.h"
 
 DEF_GEN_PARSER__PREDICATE( satisfy )
 {

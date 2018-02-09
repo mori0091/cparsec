@@ -1,9 +1,10 @@
 /* -*- mode: c++ ; coding: utf-8-unix -*- */
 
+#include <assert.h>
 #include <stdio.h>
 #include <string.h>
 
-#include "cparsec/source.h"
+#include "cparsec/core/source.h"
 
 Source Source_init( const char* str )
 {
