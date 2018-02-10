@@ -78,6 +78,7 @@ extern "C" {
 
   void Val_del( Val* x );
   void Val_print( Val* x );
+  Val Val_concat( Val* x, Val* y );
   
 #ifdef __cplusplus
 }
