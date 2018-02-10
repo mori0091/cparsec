@@ -5,7 +5,7 @@
 
 #include "cparsec.h"
 
-SCENARIO( "'letter' parser", "[cparsec]" ) {
+SCENARIO( "'letter' parser", "[cparsec][letter]" ) {
   WHEN( "parse( letter, NULL )" ) {
     Val result = parse( letter, NULL );
     THEN( "result an error" ) {

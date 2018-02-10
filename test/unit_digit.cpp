@@ -5,7 +5,7 @@
 
 #include "cparsec.h"
 
-SCENARIO( "'digit' parser", "[cparsec]" ) {
+SCENARIO( "'digit' parser", "[cparsec][digit]" ) {
   WHEN( "parse( digit, NULL )" ) {
     Val result = parse( digit, NULL );
     THEN( "result an error" ) {
@@ -110,8 +110,24 @@ SCENARIO( "'digit' parser", "[cparsec]" ) {
     }
     Val_del( &result );
   }
+  WHEN( "parse( digit, \"z\" )" ) {
+    Val result = parse( digit, "z" );
+    THEN( "result an error" ) {
+      REQUIRE( ERROR == result.type );
+      CHECK( result.error );
+    }
+    Val_del( &result );
+  }
   WHEN( "parse( digit, \"A\" )" ) {
     Val result = parse( digit, "A" );
+    THEN( "result an error" ) {
+      REQUIRE( ERROR == result.type );
+      CHECK( result.error );
+    }
+    Val_del( &result );
+  }
+  WHEN( "parse( digit, \"Z\" )" ) {
+    Val result = parse( digit, "Z" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
       CHECK( result.error );

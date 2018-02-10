@@ -5,7 +5,7 @@
 
 #include "cparsec.h"
 
-SCENARIO( "'char1' parser", "[cparsec]" ) {
+SCENARIO( "'char1' parser", "[cparsec][char1]" ) {
   Parser p = char1( 'a' );
   WHEN( "parse( char1('a'), NULL )" ) {
     Val result = parse( p, NULL );

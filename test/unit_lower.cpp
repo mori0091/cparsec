@@ -5,7 +5,7 @@
 
 #include "cparsec.h"
 
-SCENARIO( "'lower' parser", "[cparsec]" ) {
+SCENARIO( "'lower' parser", "[cparsec][lower]" ) {
   WHEN( "parse( lower, NULL )" ) {
     Val result = parse( lower, NULL );
     THEN( "result an error" ) {

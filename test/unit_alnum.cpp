@@ -5,7 +5,7 @@
 
 #include "cparsec.h"
 
-SCENARIO( "'alnum' parser", "[cparsec]" ) {
+SCENARIO( "'alnum' parser", "[cparsec][alnum]" ) {
   WHEN( "parse( alnum, NULL )" ) {
     Val result = parse( alnum, NULL );
     THEN( "result an error" ) {
