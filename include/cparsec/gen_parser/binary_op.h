@@ -20,7 +20,7 @@
   }
 
 
-//// Define a parser generator `Parser<T> name( char x )`
+//// Define a parser generator `Parser<T> name( Parser x, Parser y )`
 #define DEF_GEN_PARSER__BINARY_OP( name )		\
   Parser name( Parser x, Parser y )			\
   {							\
