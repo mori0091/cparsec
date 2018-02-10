@@ -35,6 +35,12 @@ Val Source_next( Source* src )
   return ret;
 }
 
+bool Source_eq( const Source* a, const Source* b )
+{
+  assert( a );
+  assert( b );
+  return a->s == b->s;
+}
 
 // \todo construct "[line,col] error-msg"
 Val Source_error( const Source* src, const char* msg )

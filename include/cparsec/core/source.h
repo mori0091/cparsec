@@ -21,6 +21,7 @@ extern "C" {
   Source Source_init( const char* str );
   Val Source_peek( Source* src );
   Val Source_next( Source* src );
+  bool Source_eq( const Source* a, const Source* b );
   Val Source_error( const Source* src, const char* msg );
 
 #ifdef __cplusplus
