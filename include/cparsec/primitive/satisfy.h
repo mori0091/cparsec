@@ -2,10 +2,10 @@
 
 #pragma once
 
-#ifndef CPARSEC_SATISFY_H
-#define CPARSEC_SATISFY_H
+#ifndef CPARSEC_PRIMITIVE_SATISFY_H
+#define CPARSEC_PRIMITIVE_SATISFY_H
 
-#include "cparsec/gen_parser_predicate.h"
+#include "cparsec/gen_parser/predicate.h"
 
 #define SATISFY( x )            PREDICATE( satisfy, (x) )
 #define SATISFY_ST( x )         PREDICATE_ST( satisfy, (x) )
@@ -21,4 +21,4 @@ extern "C" {
 }
 #endif
 
-#endif	/* CPARSEC_SATISFY_H */
+#endif	/* CPARSEC_PRIMITIVE_SATISFY_H */

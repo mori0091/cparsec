@@ -5,12 +5,12 @@
 
 #include "cparsec.h"
 
-SCENARIO( "'alpha' parser", "[cparsec]" ) {
+SCENARIO( "'alpha' parser", "[cparsec][alpha]" ) {
   WHEN( "parse( alpha, NULL )" ) {
     Val result = parse( alpha, NULL );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -18,7 +18,7 @@ SCENARIO( "'alpha' parser", "[cparsec]" ) {
     Val result = parse( alpha, "" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -26,7 +26,7 @@ SCENARIO( "'alpha' parser", "[cparsec]" ) {
     Val result = parse( alpha, "0" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -34,7 +34,7 @@ SCENARIO( "'alpha' parser", "[cparsec]" ) {
     Val result = parse( alpha, "1" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -42,7 +42,7 @@ SCENARIO( "'alpha' parser", "[cparsec]" ) {
     Val result = parse( alpha, "2" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -50,7 +50,7 @@ SCENARIO( "'alpha' parser", "[cparsec]" ) {
     Val result = parse( alpha, "3" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -58,7 +58,7 @@ SCENARIO( "'alpha' parser", "[cparsec]" ) {
     Val result = parse( alpha, "4" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -66,7 +66,7 @@ SCENARIO( "'alpha' parser", "[cparsec]" ) {
     Val result = parse( alpha, "5" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -74,7 +74,7 @@ SCENARIO( "'alpha' parser", "[cparsec]" ) {
     Val result = parse( alpha, "6" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -82,7 +82,7 @@ SCENARIO( "'alpha' parser", "[cparsec]" ) {
     Val result = parse( alpha, "7" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -90,7 +90,7 @@ SCENARIO( "'alpha' parser", "[cparsec]" ) {
     Val result = parse( alpha, "8" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -98,7 +98,7 @@ SCENARIO( "'alpha' parser", "[cparsec]" ) {
     Val result = parse( alpha, "9" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -106,7 +106,7 @@ SCENARIO( "'alpha' parser", "[cparsec]" ) {
     Val result = parse( alpha, "a" );
     THEN( "result is (char)'a'" ) {
       REQUIRE( CHAR == result.type );
-      REQUIRE( 'a' == result.value.c );
+      REQUIRE( 'a' == result.c );
     }
     Val_del( &result );
   }
@@ -114,7 +114,7 @@ SCENARIO( "'alpha' parser", "[cparsec]" ) {
     Val result = parse( alpha, "z" );
     THEN( "result is (char)'z'" ) {
       REQUIRE( CHAR == result.type );
-      REQUIRE( 'z' == result.value.c );
+      REQUIRE( 'z' == result.c );
     }
     Val_del( &result );
   }
@@ -122,7 +122,7 @@ SCENARIO( "'alpha' parser", "[cparsec]" ) {
     Val result = parse( alpha, "A" );
     THEN( "result is (char)'A'" ) {
       REQUIRE( CHAR == result.type );
-      REQUIRE( 'A' == result.value.c );
+      REQUIRE( 'A' == result.c );
     }
     Val_del( &result );
   }
@@ -130,7 +130,7 @@ SCENARIO( "'alpha' parser", "[cparsec]" ) {
     Val result = parse( alpha, "Z" );
     THEN( "result is (char)'Z'" ) {
       REQUIRE( CHAR == result.type );
-      REQUIRE( 'Z' == result.value.c );
+      REQUIRE( 'Z' == result.c );
     }
     Val_del( &result );
   }
@@ -138,7 +138,7 @@ SCENARIO( "'alpha' parser", "[cparsec]" ) {
     Val result = parse( alpha, "_" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -146,7 +146,7 @@ SCENARIO( "'alpha' parser", "[cparsec]" ) {
     Val result = parse( alpha, "!" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }

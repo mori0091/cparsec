@@ -3,52 +3,8 @@
 #include <stdio.h>
 
 #include "cparsec.h"
-#include "cparsec/parser.h"
-#include "cparsec/source.h"
-
-void Val_del( Val* x )
-{
-  if ( x ) {
-    if ( x->del ) {
-      x->del( x->value.ptr );
-      x->value.ptr = 0;
-    }
-  }
-}
-
-void Val_print( Val* x )
-{
-  assert( x );
-  switch ( x->type ) {
-  case ERROR:
-    printf( "parse error: %s\n", x->value.error );
-    break;
-  case CHAR:
-    printf( "%c\n", x->value.c );
-    break;
-  case INT:
-    printf( "%d\n", x->value.i );
-    break;
-  case DOUBLE:
-    printf( "%f\n", x->value.d );
-    break;
-  case PTR:
-    printf( "%p\n", x->value.ptr );
-    break;
-  case STRING:
-    printf( "%s\n", x->value.str );
-    break;
-  case PARSER:
-    printf( "Parser(%p)\n", x->value.ptr );
-    break;
-  case PREDICATE:
-    printf( "Predicate(%p)\n", x->value.ptr );
-    break;
-  default:
-    printf( "Unknown value\n" );
-    break;
-  }
-}
+#include "cparsec/core/val.h"
+#include "cparsec/core/parser.h"
 
 Val parse( const Parser x, const char* str )
 {

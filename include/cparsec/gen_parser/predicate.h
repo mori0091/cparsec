@@ -2,11 +2,11 @@
 
 #pragma once
 
-#ifndef CPARSEC_GEN_PARSER_PREDICATE_H
-#define CPARSEC_GEN_PARSER_PREDICATE_H
+#ifndef CPARSEC_CORE_GEN_PARSER_PREDICATE_H
+#define CPARSEC_CORE_GEN_PARSER_PREDICATE_H
 
 #include "cparsec.h"
-#include "cparsec/parser.h"
+#include "cparsec/core/parser.h"
 
 //// Constructs ParserSt< T (Predicate) >
 #define PREDICATE( name, x )            &(PREDICATE_ST( name, (x) ))
@@ -38,4 +38,4 @@ extern "C" {
 }
 #endif
 
-#endif	/* CPARSEC_GEN_PARSER_PREDICATE_H */
+#endif	/* CPARSEC_CORE_GEN_PARSER_PREDICATE_H */

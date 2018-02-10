@@ -1,9 +1,12 @@
 /* -*- mode: c++ ; coding: utf-8-unix -*- */
 
+#include <assert.h>
+#include <ctype.h>
 #include <stdio.h>
 #include <string.h>
 
-#include "cparsec/source.h"
+#include "cparsec/core/source.h"
+#include "cparsec/util/string_utils.h"
 
 Source Source_init( const char* str )
 {
@@ -24,7 +27,7 @@ Val Source_next( Source* src )
   if ( ret.type != ERROR ) {
     ++(src->s);
     ++(src->col);
-    if ( ret.value.c == '\n' ) {
+    if ( ret.c == '\n' ) {
       ++(src->line);
       src->col = 1;
     }
@@ -32,18 +35,23 @@ Val Source_next( Source* src )
   return ret;
 }
 
+
 // \todo construct "[line,col] error-msg"
 Val Source_error( const Source* src, const char* msg )
 {
-  const char fmt[] = "[line %d, col %d] %s%s";
-  const char ch[] = { ' ', '<', *(src->s), '>', '\0' };
-  const char* pch = ( ( *(src->s) ) ? ch : "" );
-  char buf[256];
-  const int n = sizeof( buf );
-  int m = snprintf( buf, n, fmt, src->line, src->col, msg, pch );
-  if ( 0 < m && m < n ) {
-    buf[n-1] = '\0';
-    return D_ERROR_VAL( strdup( buf ) );
+  char sline[32];
+  char scol[32];
+  char ch[8] = {0,};
+  snprintf( sline, sizeof(sline), "%d", src->line );
+  snprintf( scol , sizeof(scol) , "%d", src->col );
+  if ( *(src->s) ) {
+    if ( isprint( *(src->s) ) ) {
+      snprintf( ch, sizeof(ch), " <%c>", *(src->s) );
+    }
+    else {
+      snprintf( ch, sizeof(ch), " <0x%02x>", (0xFF & *(src->s)) );
+    }
   }
-  return ERROR_VAL( msg );	// couldn't customize error message
+  DEF_STRING( err, "[line ", sline, ", col ", scol, "] ", msg, ch );
+  return D_ERROR_VAL( strdup( err ) );
 }

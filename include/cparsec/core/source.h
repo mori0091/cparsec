@@ -2,10 +2,10 @@
 
 #pragma once
 
-#ifndef CPARSEC_SOURCE_H
-#define CPARSEC_SOURCE_H
+#ifndef CPARSEC_CORE_SOURCE_H
+#define CPARSEC_CORE_SOURCE_H
 
-#include "cparsec.h"
+#include "cparsec/core/val.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -27,4 +27,4 @@ extern "C" {
 }
 #endif
 
-#endif	/* CPARSEC_SOURCE_H */
+#endif	/* CPARSEC_CORE_SOURCE_H */

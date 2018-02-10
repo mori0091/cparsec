@@ -5,12 +5,12 @@
 
 #include "cparsec.h"
 
-SCENARIO( "'lower' parser", "[cparsec]" ) {
+SCENARIO( "'lower' parser", "[cparsec][lower]" ) {
   WHEN( "parse( lower, NULL )" ) {
     Val result = parse( lower, NULL );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -18,7 +18,7 @@ SCENARIO( "'lower' parser", "[cparsec]" ) {
     Val result = parse( lower, "" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -26,7 +26,7 @@ SCENARIO( "'lower' parser", "[cparsec]" ) {
     Val result = parse( lower, "0" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -34,7 +34,7 @@ SCENARIO( "'lower' parser", "[cparsec]" ) {
     Val result = parse( lower, "1" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -42,7 +42,7 @@ SCENARIO( "'lower' parser", "[cparsec]" ) {
     Val result = parse( lower, "2" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -50,7 +50,7 @@ SCENARIO( "'lower' parser", "[cparsec]" ) {
     Val result = parse( lower, "3" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -58,7 +58,7 @@ SCENARIO( "'lower' parser", "[cparsec]" ) {
     Val result = parse( lower, "4" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -66,7 +66,7 @@ SCENARIO( "'lower' parser", "[cparsec]" ) {
     Val result = parse( lower, "5" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -74,7 +74,7 @@ SCENARIO( "'lower' parser", "[cparsec]" ) {
     Val result = parse( lower, "6" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -82,7 +82,7 @@ SCENARIO( "'lower' parser", "[cparsec]" ) {
     Val result = parse( lower, "7" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -90,7 +90,7 @@ SCENARIO( "'lower' parser", "[cparsec]" ) {
     Val result = parse( lower, "8" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -98,7 +98,7 @@ SCENARIO( "'lower' parser", "[cparsec]" ) {
     Val result = parse( lower, "9" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -106,7 +106,7 @@ SCENARIO( "'lower' parser", "[cparsec]" ) {
     Val result = parse( lower, "a" );
     THEN( "result is (char)'a'" ) {
       REQUIRE( CHAR == result.type );
-      REQUIRE( 'a' == result.value.c );
+      REQUIRE( 'a' == result.c );
     }
     Val_del( &result );
   }
@@ -114,7 +114,7 @@ SCENARIO( "'lower' parser", "[cparsec]" ) {
     Val result = parse( lower, "z" );
     THEN( "result is (char)'z'" ) {
       REQUIRE( CHAR == result.type );
-      REQUIRE( 'z' == result.value.c );
+      REQUIRE( 'z' == result.c );
     }
     Val_del( &result );
   }
@@ -122,7 +122,7 @@ SCENARIO( "'lower' parser", "[cparsec]" ) {
     Val result = parse( lower, "A" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -130,7 +130,7 @@ SCENARIO( "'lower' parser", "[cparsec]" ) {
     Val result = parse( lower, "Z" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -138,7 +138,7 @@ SCENARIO( "'lower' parser", "[cparsec]" ) {
     Val result = parse( lower, "_" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -146,7 +146,7 @@ SCENARIO( "'lower' parser", "[cparsec]" ) {
     Val result = parse( lower, "!" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }

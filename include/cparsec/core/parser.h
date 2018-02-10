@@ -2,11 +2,11 @@
 
 #pragma once
 
-#ifndef CPARSEC_PARSER_H
-#define CPARSEC_PARSER_H
+#ifndef CPARSEC_CORE_PARSER_H
+#define CPARSEC_CORE_PARSER_H
 
 #include "cparsec.h"
-#include "cparsec/source.h"
+#include "cparsec/core/source.h"
 
 #define PARSER_FUNC_NAME( name )    PARSER_FUNC_NAME_I( name )
 #define PARSER_FUNC_NAME_I( name )  name ## _run
@@ -37,4 +37,4 @@ extern "C" {
 }
 #endif
 
-#endif	/* CPARSEC_PARSER_H */
+#endif	/* CPARSEC_CORE_PARSER_H */

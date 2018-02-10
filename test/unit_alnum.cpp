@@ -5,12 +5,12 @@
 
 #include "cparsec.h"
 
-SCENARIO( "'alnum' parser", "[cparsec]" ) {
+SCENARIO( "'alnum' parser", "[cparsec][alnum]" ) {
   WHEN( "parse( alnum, NULL )" ) {
     Val result = parse( alnum, NULL );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -18,7 +18,7 @@ SCENARIO( "'alnum' parser", "[cparsec]" ) {
     Val result = parse( alnum, "" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -26,7 +26,7 @@ SCENARIO( "'alnum' parser", "[cparsec]" ) {
     Val result = parse( alnum, "0" );
     THEN( "result is (char)'0'" ) {
       REQUIRE( CHAR == result.type );
-      REQUIRE( '0' == result.value.c );
+      REQUIRE( '0' == result.c );
     }
     Val_del( &result );
   }
@@ -34,7 +34,7 @@ SCENARIO( "'alnum' parser", "[cparsec]" ) {
     Val result = parse( alnum, "1" );
     THEN( "result is (char)'1'" ) {
       REQUIRE( CHAR == result.type );
-      REQUIRE( '1' == result.value.c );
+      REQUIRE( '1' == result.c );
     }
     Val_del( &result );
   }
@@ -42,7 +42,7 @@ SCENARIO( "'alnum' parser", "[cparsec]" ) {
     Val result = parse( alnum, "2" );
     THEN( "result is (char)'2'" ) {
       REQUIRE( CHAR == result.type );
-      REQUIRE( '2' == result.value.c );
+      REQUIRE( '2' == result.c );
     }
     Val_del( &result );
   }
@@ -50,7 +50,7 @@ SCENARIO( "'alnum' parser", "[cparsec]" ) {
     Val result = parse( alnum, "3" );
     THEN( "result is (char)'3'" ) {
       REQUIRE( CHAR == result.type );
-      REQUIRE( '3' == result.value.c );
+      REQUIRE( '3' == result.c );
     }
     Val_del( &result );
   }
@@ -58,7 +58,7 @@ SCENARIO( "'alnum' parser", "[cparsec]" ) {
     Val result = parse( alnum, "4" );
     THEN( "result is (char)'4'" ) {
       REQUIRE( CHAR == result.type );
-      REQUIRE( '4' == result.value.c );
+      REQUIRE( '4' == result.c );
     }
     Val_del( &result );
   }
@@ -66,7 +66,7 @@ SCENARIO( "'alnum' parser", "[cparsec]" ) {
     Val result = parse( alnum, "5" );
     THEN( "result is (char)'5'" ) {
       REQUIRE( CHAR == result.type );
-      REQUIRE( '5' == result.value.c );
+      REQUIRE( '5' == result.c );
     }
     Val_del( &result );
   }
@@ -74,7 +74,7 @@ SCENARIO( "'alnum' parser", "[cparsec]" ) {
     Val result = parse( alnum, "6" );
     THEN( "result is (char)'6'" ) {
       REQUIRE( CHAR == result.type );
-      REQUIRE( '6' == result.value.c );
+      REQUIRE( '6' == result.c );
     }
     Val_del( &result );
   }
@@ -82,7 +82,7 @@ SCENARIO( "'alnum' parser", "[cparsec]" ) {
     Val result = parse( alnum, "7" );
     THEN( "result is (char)'7'" ) {
       REQUIRE( CHAR == result.type );
-      REQUIRE( '7' == result.value.c );
+      REQUIRE( '7' == result.c );
     }
     Val_del( &result );
   }
@@ -90,7 +90,7 @@ SCENARIO( "'alnum' parser", "[cparsec]" ) {
     Val result = parse( alnum, "8" );
     THEN( "result is (char)'8'" ) {
       REQUIRE( CHAR == result.type );
-      REQUIRE( '8' == result.value.c );
+      REQUIRE( '8' == result.c );
     }
     Val_del( &result );
   }
@@ -98,7 +98,7 @@ SCENARIO( "'alnum' parser", "[cparsec]" ) {
     Val result = parse( alnum, "9" );
     THEN( "result is (char)'9'" ) {
       REQUIRE( CHAR == result.type );
-      REQUIRE( '9' == result.value.c );
+      REQUIRE( '9' == result.c );
     }
     Val_del( &result );
   }
@@ -106,7 +106,7 @@ SCENARIO( "'alnum' parser", "[cparsec]" ) {
     Val result = parse( alnum, "a" );
     THEN( "result is (char)'a'" ) {
       REQUIRE( CHAR == result.type );
-      REQUIRE( 'a' == result.value.c );
+      REQUIRE( 'a' == result.c );
     }
     Val_del( &result );
   }
@@ -114,7 +114,7 @@ SCENARIO( "'alnum' parser", "[cparsec]" ) {
     Val result = parse( alnum, "z" );
     THEN( "result is (char)'z'" ) {
       REQUIRE( CHAR == result.type );
-      REQUIRE( 'z' == result.value.c );
+      REQUIRE( 'z' == result.c );
     }
     Val_del( &result );
   }
@@ -122,7 +122,7 @@ SCENARIO( "'alnum' parser", "[cparsec]" ) {
     Val result = parse( alnum, "A" );
     THEN( "result is (char)'A'" ) {
       REQUIRE( CHAR == result.type );
-      REQUIRE( 'A' == result.value.c );
+      REQUIRE( 'A' == result.c );
     }
     Val_del( &result );
   }
@@ -130,7 +130,7 @@ SCENARIO( "'alnum' parser", "[cparsec]" ) {
     Val result = parse( alnum, "Z" );
     THEN( "result is (char)'Z'" ) {
       REQUIRE( CHAR == result.type );
-      REQUIRE( 'Z' == result.value.c );
+      REQUIRE( 'Z' == result.c );
     }
     Val_del( &result );
   }
@@ -138,7 +138,7 @@ SCENARIO( "'alnum' parser", "[cparsec]" ) {
     Val result = parse( alnum, "_" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
@@ -146,7 +146,7 @@ SCENARIO( "'alnum' parser", "[cparsec]" ) {
     Val result = parse( alnum, "!" );
     THEN( "result an error" ) {
       REQUIRE( ERROR == result.type );
-      CHECK( result.value.error );
+      CHECK( result.error );
     }
     Val_del( &result );
   }
