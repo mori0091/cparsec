@@ -5,128 +5,123 @@
 
 #include "cparsec.h"
 
-SCENARIO( "'many1' parser combinator", "[cparsec][many1]" ) {
+SCENARIO( "'rep' parser combinator", "[cparsec][rep]" ) {
     GIVEN( "Parser a = char1('a')" ) {
         Parser a = char1('a');
-        WHEN( "parse( many1(a), \"\")" ) {
+        WHEN( "parse( rep(3,a), \"\")" ) {
             const char* input  = "";
-            Val ret = parse( many1(a), input );
+            Val ret = parse( rep(3,a), input );
             THEN( "results an error" ) {
                 REQUIRE( ret.type == ERROR );
                 CHECK( ret.error );
             }
             Val_del( &ret );
         }
-        WHEN( "parse( many1(a), \"a\")" ) {
+        WHEN( "parse( rep(3,a), \"a\")" ) {
             const char* input  = "a";
-            std::string expect = "a";
-            Val ret = parse( many1(a), input );
-            THEN( "results a string \"" + expect + "\"" ) {
-                REQUIRE( ret.type == STRING );
-                REQUIRE( expect == ret.str );
+            Val ret = parse( rep(3,a), input );
+            THEN( "results an error" ) {
+                REQUIRE( ret.type == ERROR );
+                CHECK( ret.error );
             }
             Val_del( &ret );
         }
-        WHEN( "parse( many1(a), \"b\")" ) {
+        WHEN( "parse( rep(3,a), \"b\")" ) {
             const char* input  = "b";
-            Val ret = parse( many1(a), input );
+            Val ret = parse( rep(3,a), input );
             THEN( "results an error" ) {
                 REQUIRE( ret.type == ERROR );
                 CHECK( ret.error );
             }
             Val_del( &ret );
         }
-        WHEN( "parse( many1(a), \"c\")" ) {
+        WHEN( "parse( rep(3,a), \"c\")" ) {
             const char* input  = "c";
-            Val ret = parse( many1(a), input );
+            Val ret = parse( rep(3,a), input );
             THEN( "results an error" ) {
                 REQUIRE( ret.type == ERROR );
                 CHECK( ret.error );
             }
             Val_del( &ret );
         }
-        WHEN( "parse( many1(a), \"ab\")" ) {
+        WHEN( "parse( rep(3,a), \"ab\")" ) {
             const char* input  = "ab";
-            std::string expect = "a";
-            Val ret = parse( many1(a), input );
-            THEN( "results a string \"" + expect + "\"" ) {
-                REQUIRE( ret.type == STRING );
-                REQUIRE( expect == ret.str );
+            Val ret = parse( rep(3,a), input );
+            THEN( "results an error" ) {
+                REQUIRE( ret.type == ERROR );
+                CHECK( ret.error );
             }
             Val_del( &ret );
         }
-        WHEN( "parse( many1(a), \"abc\")" ) {
+        WHEN( "parse( rep(3,a), \"abc\")" ) {
             const char* input  = "abc";
-            std::string expect = "a";
-            Val ret = parse( many1(a), input );
-            THEN( "results a string \"" + expect + "\"" ) {
-                REQUIRE( ret.type == STRING );
-                REQUIRE( expect == ret.str );
+            Val ret = parse( rep(3,a), input );
+            THEN( "results an error" ) {
+                REQUIRE( ret.type == ERROR );
+                CHECK( ret.error );
             }
             Val_del( &ret );
         }
-        WHEN( "parse( many1(a), \"ac\")" ) {
+        WHEN( "parse( rep(3,a), \"ac\")" ) {
             const char* input  = "ac";
-            std::string expect = "a";
-            Val ret = parse( many1(a), input );
-            THEN( "results a string \"" + expect + "\"" ) {
-                REQUIRE( ret.type == STRING );
-                REQUIRE( expect == ret.str );
+            Val ret = parse( rep(3,a), input );
+            THEN( "results an error" ) {
+                REQUIRE( ret.type == ERROR );
+                CHECK( ret.error );
             }
             Val_del( &ret );
         }
-        WHEN( "parse( many1(a), \"ba\")" ) {
+        WHEN( "parse( rep(3,a), \"ba\")" ) {
             const char* input  = "ba";
-            Val ret = parse( many1(a), input );
+            Val ret = parse( rep(3,a), input );
             THEN( "results an error" ) {
                 REQUIRE( ret.type == ERROR );
                 CHECK( ret.error );
             }
             Val_del( &ret );
         }
-        WHEN( "parse( many1(a), \"bab\")" ) {
+        WHEN( "parse( rep(3,a), \"bab\")" ) {
             const char* input  = "bab";
-            Val ret = parse( many1(a), input );
+            Val ret = parse( rep(3,a), input );
             THEN( "results an error" ) {
                 REQUIRE( ret.type == ERROR );
                 CHECK( ret.error );
             }
             Val_del( &ret );
         }
-        WHEN( "parse( many1(a), \"aa\")" ) {
+        WHEN( "parse( rep(3,a), \"aa\")" ) {
             const char* input  = "aa";
-            std::string expect = "aa";
-            Val ret = parse( many1(a), input );
-            THEN( "results a string \"" + expect + "\"" ) {
-                REQUIRE( ret.type == STRING );
-                REQUIRE( expect == ret.str );
+            Val ret = parse( rep(3,a), input );
+            THEN( "results an error" ) {
+                REQUIRE( ret.type == ERROR );
+                CHECK( ret.error );
             }
             Val_del( &ret );
         }
-        WHEN( "parse( many1(a), \"aaa\")" ) {
+        WHEN( "parse( rep(3,a), \"aaa\")" ) {
             const char* input  = "aaa";
             std::string expect = "aaa";
-            Val ret = parse( many1(a), input );
+            Val ret = parse( rep(3,a), input );
             THEN( "results a string \"" + expect + "\"" ) {
                 REQUIRE( ret.type == STRING );
                 REQUIRE( expect == ret.str );
             }
             Val_del( &ret );
         }
-        WHEN( "parse( many1(a), \"aaaa\")" ) {
+        WHEN( "parse( rep(3,a), \"aaaa\")" ) {
             const char* input  = "aaaa";
-            std::string expect = "aaaa";
-            Val ret = parse( many1(a), input );
+            std::string expect = "aaa";
+            Val ret = parse( rep(3,a), input );
             THEN( "results a string \"" + expect + "\"" ) {
                 REQUIRE( ret.type == STRING );
                 REQUIRE( expect == ret.str );
             }
             Val_del( &ret );
         }
-        WHEN( "parse( many1(a), \"aaabbb\")" ) {
+        WHEN( "parse( rep(3,a), \"aaabbb\")" ) {
             const char* input  = "aaabbb";
             std::string expect = "aaa";
-            Val ret = parse( many1(a), input );
+            Val ret = parse( rep(3,a), input );
             THEN( "results a string \"" + expect + "\"" ) {
                 REQUIRE( ret.type == STRING );
                 REQUIRE( expect == ret.str );
