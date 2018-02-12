@@ -1,6 +1,6 @@
 /* -*- mode: c++ ; coding: utf-8-unix -*- */
 
-#include "cparsec/primitive/number.h"
+#include "cparsec/arithmetic/number.h"
 
 #define UNUSED_VARIABLE(x)    (void)(x)
 
