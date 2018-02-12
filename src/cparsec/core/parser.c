@@ -53,3 +53,12 @@ void Parser_unref( Parser p )
     }
 }
 
+Val Parser_eval( const Parser p, Source* psrc )
+{
+    assert( p );
+    assert( psrc );
+    Parser_ref( p );
+    Val ret = p->run( p, psrc );
+    Parser_unref( p );
+    return ret;
+}
