@@ -8,15 +8,15 @@
 
 Val parse( const Parser x, const char* str )
 {
-  if ( ! x   ) { return ERROR_VAL( "null parser" ); }
-  if ( ! str ) { return ERROR_VAL( "null text" ); }
-  Source s = Source_init( str );
-  return x->run( x, &s );
+    if ( ! x   ) { return ERROR_VAL( "null parser" ); }
+    if ( ! str ) { return ERROR_VAL( "null text" ); }
+    Source s = Source_init( str );
+    return x->run( x, &s );
 }
 
 void parse_test( const Parser x, const char* str )
 {
-  Val result = parse( x, str );
-  Val_print( &result );
-  Val_del( &result);
+    Val result = parse( x, str );
+    Val_print( &result );
+    Val_del( &result);
 }

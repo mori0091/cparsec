@@ -17,24 +17,24 @@
 extern "C" {
 #endif
 
-  typedef Val (*ParserFunc)( const Parser, Source* );
+    typedef Val (*ParserFunc)( const Parser, Source* );
 
-  typedef struct ParserSt ParserSt;
+    typedef struct ParserSt ParserSt;
 
-  struct ParserSt {
-    int ref_cnt;
-    Val arg1;
-    Val arg2;
-    ParserFunc run;
-  };
+    struct ParserSt {
+        int ref_cnt;
+        Val arg1;
+        Val arg2;
+        ParserFunc run;
+    };
 
-  Parser Parser_new( void );
-  void Parser_ref( Parser p );
-  int Parser_unref( Parser p );
-  // void Parser_del( Parser p );
+    Parser Parser_new( void );
+    void Parser_ref( Parser p );
+    int Parser_unref( Parser p );
+    // void Parser_del( Parser p );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif	/* CPARSEC_CORE_PARSER_H */
+#endif  /* CPARSEC_CORE_PARSER_H */

@@ -15,10 +15,10 @@
 extern "C" {
 #endif
 
-  extern DECL_PARSER_FUNC( many );
+    extern DECL_PARSER_FUNC( many );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif	/* CPARSEC_PRIMITIVE_MANY_H */
+#endif  /* CPARSEC_PRIMITIVE_MANY_H */

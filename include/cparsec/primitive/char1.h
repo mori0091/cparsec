@@ -15,10 +15,10 @@
 extern "C" {
 #endif
 
-  extern DECL_PARSER_FUNC( char1 );
-  
+    extern DECL_PARSER_FUNC( char1 );
+
 #ifdef __cplusplus
 }
 #endif
 
-#endif	/* CPARSEC_PRIMITIVE_CHAR1_H */
+#endif  /* CPARSEC_PRIMITIVE_CHAR1_H */

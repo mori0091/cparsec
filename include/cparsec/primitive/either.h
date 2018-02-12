@@ -15,10 +15,10 @@
 extern "C" {
 #endif
 
-  extern DECL_PARSER_FUNC( either );
+    extern DECL_PARSER_FUNC( either );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif	/* CPARSEC_PRIMITIVE_EITHER_H */
+#endif  /* CPARSEC_PRIMITIVE_EITHER_H */
