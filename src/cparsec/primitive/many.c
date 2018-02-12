@@ -7,7 +7,6 @@ DEF_GEN_PARSER__UNARY_OP( many )
 {
   Val ret = STRING_VAL( "" );
   for (;;) {
-    assert( self->arg1.parser );
     Val x = RUN_PARSER( self->arg1.parser );
     if ( x.type == ERROR ) {
       Val_del( &x );
