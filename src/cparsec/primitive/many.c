@@ -3,7 +3,7 @@
 #include "cparsec/primitive/many.h"
 
 // \todo error message should be "expected <X> but was <y>"
-DEF_GEN_PARSER__UNARY_OP( many )
+DEF_PARSER__UNARY_OP( many )
 {
     Val ret = STRING_VAL( "" );
     for (;;) {

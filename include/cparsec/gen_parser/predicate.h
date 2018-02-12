@@ -21,7 +21,7 @@
 
 
 //// Define a parser generator `Parser<T> name( Predicate x )`
-#define DEF_GEN_PARSER__PREDICATE( name )               \
+#define DEF_PARSER__PREDICATE( name )                   \
     Parser name( Predicate x )                          \
     {                                                   \
         Parser p = Parser_new();                        \

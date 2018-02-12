@@ -21,7 +21,7 @@
 
 
 //// Define a parser generator `Parser<T> name( Parser x )`
-#define DEF_GEN_PARSER__UNARY_OP( name )                \
+#define DEF_PARSER__UNARY_OP( name )                    \
     Parser name( Parser x )                             \
     {                                                   \
         assert( x );                                    \

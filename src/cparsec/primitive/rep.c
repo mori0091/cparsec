@@ -3,7 +3,7 @@
 #include "cparsec/primitive/rep.h"
 
 // \todo error message should be "expected <X> but was <y>"
-DEF_GEN_PARSER__INT_PARSER( rep )
+DEF_PARSER__INT_PARSER( rep )
 {
     Val ret = STRING_VAL( "" );
     const int n = self->arg1.i;

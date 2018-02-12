@@ -4,10 +4,10 @@
 
 #define UNUSED_VARIABLE(x)    (void)(x)
 
-static ParserSt number_ = PARSER_0_ST_INIT( number );
+static ParserSt number_ = NO_ARGS_ST_INIT( number );
 const Parser number = &number_;
 
-DEF_PARSER_0( number )
+DEF_PARSER__NO_ARGS( number )
 {
     UNUSED_VARIABLE( self );
     Val x = RUN_PARSER( many1( digit ) );

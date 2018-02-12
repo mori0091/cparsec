@@ -3,7 +3,7 @@
 #include "cparsec/primitive/tryp.h"
 
 // \todo error message should be "expected <X> but was <y>"
-DEF_GEN_PARSER__UNARY_OP( tryp )
+DEF_PARSER__UNARY_OP( tryp )
 {
     Source bak = *psrc;
     Val ret = RUN_PARSER( self->arg1.parser );
