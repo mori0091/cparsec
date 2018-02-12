@@ -150,4 +150,5 @@ SCENARIO( "'any_char' parser", "[cparsec][any_char]" ) {
         }
         Val_del( &result );
     }
+    REQUIRE( 0 == Parser_live_count() );
 }

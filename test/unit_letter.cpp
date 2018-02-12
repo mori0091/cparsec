@@ -150,4 +150,5 @@ SCENARIO( "'letter' parser", "[cparsec][letter]" ) {
         }
         Val_del( &result );
     }
+    REQUIRE( 0 == Parser_live_count() );
 }

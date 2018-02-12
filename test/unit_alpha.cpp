@@ -150,4 +150,5 @@ SCENARIO( "'alpha' parser", "[cparsec][alpha]" ) {
         }
         Val_del( &result );
     }
+    REQUIRE( 0 == Parser_live_count() );
 }

@@ -13,7 +13,7 @@
 #define PREDICATE_ST( name, x )         (ParserSt)PREDICATE_ST_INIT( name, (x) )
 #define PREDICATE_ST_INIT( name, x )            \
     {                                           \
-        .ref_cnt = 0,                           \
+        .ref_cnt = -1,                          \
         .arg1 = PREDICATE_VAL_INIT( (x) ),      \
         .arg2 = NONE_VAL_INIT,                  \
         .run  = PARSER_FUNC_NAME( name ),       \
@@ -25,7 +25,10 @@
     Parser name( Predicate x )                          \
     {                                                   \
         Parser p = Parser_new();                        \
-        if ( p ) { *p = PREDICATE_ST( name, x ); }      \
+        if ( p ) {                                      \
+            *p = PREDICATE_ST( name, x );               \
+            p->ref_cnt = 0;                             \
+        }                                               \
         return p;                                       \
     }                                                   \
     DECL_PARSER_FUNC( name )

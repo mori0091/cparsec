@@ -137,4 +137,5 @@ SCENARIO( "Tests each char-type parsers for all chars", "[cparsec][chars]" ) {
             }
         }
     }
+    REQUIRE( 0 == Parser_live_count() );
 }

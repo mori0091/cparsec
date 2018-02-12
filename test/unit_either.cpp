@@ -7,11 +7,15 @@
 
 SCENARIO( "'either' parser combinator", "[cparsec][either]" ) {
     GIVEN( "Parser a = char1('a'), b = char1('b')" ) {
+        // Parser a = Parser_ref( char1('a') );
+        // Parser b = Parser_ref( char1('b') );
         Parser a = char1('a');
         Parser b = char1('b');
+        REQUIRE( 2 == Parser_live_count() );
         WHEN( "parse( either(a,b), \"\")" ) {
             const char* input = "";
             Val ret = parse( either(a,b), input );
+            REQUIRE( 0 == Parser_live_count() );
             THEN( "results an error" ) {
                 REQUIRE( ret.type == ERROR );
                 CHECK( ret.error );
@@ -22,6 +26,7 @@ SCENARIO( "'either' parser combinator", "[cparsec][either]" ) {
             const char* input = "a";
             const char expect = 'a';
             Val ret = parse( either(a,b), input );
+            REQUIRE( 0 == Parser_live_count() );
             THEN( std::string("") + "results a char'" + expect + "'" ) {
                 REQUIRE( ret.type == CHAR );
                 REQUIRE( expect == ret.c );
@@ -32,6 +37,7 @@ SCENARIO( "'either' parser combinator", "[cparsec][either]" ) {
             const char* input = "b";
             const char expect = 'b';
             Val ret = parse( either(a,b), input );
+            REQUIRE( 0 == Parser_live_count() );
             THEN( std::string("") + "results a char'" + expect + "'" ) {
                 REQUIRE( ret.type == CHAR );
                 REQUIRE( expect == ret.c );
@@ -41,6 +47,7 @@ SCENARIO( "'either' parser combinator", "[cparsec][either]" ) {
         WHEN( "parse( either(a,b), \"c\")" ) {
             const char* input = "c";
             Val ret = parse( either(a,b), input );
+            REQUIRE( 0 == Parser_live_count() );
             THEN( "results an error" ) {
                 REQUIRE( ret.type == ERROR );
                 CHECK( ret.error );
@@ -51,6 +58,7 @@ SCENARIO( "'either' parser combinator", "[cparsec][either]" ) {
             const char* input = "ab";
             const char expect = 'a';
             Val ret = parse( either(a,b), input );
+            REQUIRE( 0 == Parser_live_count() );
             THEN( std::string("") + "results a char'" + expect + "'" ) {
                 REQUIRE( ret.type == CHAR );
                 REQUIRE( expect == ret.c );
@@ -61,6 +69,7 @@ SCENARIO( "'either' parser combinator", "[cparsec][either]" ) {
             const char* input = "abc";
             const char expect = 'a';
             Val ret = parse( either(a,b), input );
+            REQUIRE( 0 == Parser_live_count() );
             THEN( std::string("") + "results a char'" + expect + "'" ) {
                 REQUIRE( ret.type == CHAR );
                 REQUIRE( expect == ret.c );
@@ -71,6 +80,7 @@ SCENARIO( "'either' parser combinator", "[cparsec][either]" ) {
             const char* input = "ac";
             const char expect = 'a';
             Val ret = parse( either(a,b), input );
+            REQUIRE( 0 == Parser_live_count() );
             THEN( std::string("") + "results a char'" + expect + "'" ) {
                 REQUIRE( ret.type == CHAR );
                 REQUIRE( expect == ret.c );
@@ -81,6 +91,7 @@ SCENARIO( "'either' parser combinator", "[cparsec][either]" ) {
             const char* input = "ba";
             const char expect = 'b';
             Val ret = parse( either(a,b), input );
+            REQUIRE( 0 == Parser_live_count() );
             THEN( std::string("") + "results a char'" + expect + "'" ) {
                 REQUIRE( ret.type == CHAR );
                 REQUIRE( expect == ret.c );
@@ -91,13 +102,15 @@ SCENARIO( "'either' parser combinator", "[cparsec][either]" ) {
             const char* input = "bab";
             const char expect = 'b';
             Val ret = parse( either(a,b), input );
+            REQUIRE( 0 == Parser_live_count() );
             THEN( std::string("") + "results a char'" + expect + "'" ) {
                 REQUIRE( ret.type == CHAR );
                 REQUIRE( expect == ret.c );
             }
             Val_del( &ret );
         }
-        Parser_del( a );
-        Parser_del( b );
+        // Parser_unref( a );
+        // Parser_unref( b );
     }
+    REQUIRE( 0 == Parser_live_count() );
 }

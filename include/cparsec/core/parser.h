@@ -28,10 +28,11 @@ extern "C" {
         ParserFunc run;
     };
 
+    // int Parser_live_count( void );
     Parser Parser_new( void );
-    void Parser_ref( Parser p );
-    int Parser_unref( Parser p );
-    // void Parser_del( Parser p );
+    void Parser_del( Parser p );
+    // Parser Parser_ref( Parser p );
+    // void Parser_unref( Parser p );
 
 #ifdef __cplusplus
 }

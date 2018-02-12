@@ -40,7 +40,7 @@
 #define   D_ERROR_VAL_INIT( x )  { .type = ERROR    , .str       = (x), .del = free }
 #define     D_PTR_VAL_INIT( x )  { .type = PTR      , .ptr       = (x), .del = free }
 #define  D_STRING_VAL_INIT( x )  { .type = STRING   , .str       = (x), .del = free }
-#define  D_PARSER_VAL_INIT( x )  { .type = PARSER   , .parser    = (x), .del = (Deleter)Parser_del }
+#define  D_PARSER_VAL_INIT( x )  { .type = PARSER   , .parser    = (x), .del = (Deleter)Parser_unref }
 
 #ifdef __cplusplus
 extern "C" {
