@@ -1,7 +1,6 @@
 /* -*- mode: c++ ; coding: utf-8-unix -*- */
 
 #include "cparsec/primitive/singleton.h"
-
 #include "cparsec/primitive/satisfy.h"
 
 #define UNUSED_VARIABLE(x)    (void)(x)

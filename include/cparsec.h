@@ -102,6 +102,7 @@ extern "C" {
     extern const Parser alpha;    ///< A pre-instantiated singleton parser. Parses `'a'`..`'z'`, `'A'`..`'Z'`
     extern const Parser alnum;    ///< A pre-instantiated singleton parser. Parses `'a'`..`'z'`, `'A'`..`'Z'`, `'0'`..`'9'`
     extern const Parser letter;   ///< A pre-instantiated singleton parser. Parses `'a'`..`'z'`, `'A'`..`'Z'`, `'_'`
+    extern const Parser number;   ///< A pre-instantiated singleton parser. Parses decimal number
 
     //// primitive parser generators
     /**
