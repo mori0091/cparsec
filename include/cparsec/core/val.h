@@ -62,22 +62,45 @@ extern "C" {
     };
 
     struct Val {
-        enum  ValType  type;
+        enum  ValType  type;    ///< Type of the value
         union {
-            const char*      error;
-            char             c;
-            int              i;
-            double           d;
-            void*            ptr;
-            const char*      str;
-            struct ParserSt* parser;
-            Predicate        predicate;
+            const char*      error;     ///< An error message for type of ERROR
+            char             c;         ///< A char value for type of CHAR
+            int              i;         ///< An int value for type of INT
+            double           d;         ///< A double value for type of DOUBLE
+            void*            ptr;       ///< A void* value for type of PTR
+            const char*      str;       ///< A const char* value for type of STRING
+            struct ParserSt* parser;    ///< A Parser value for type of PARSER
+            Predicate        predicate; ///< A Predicate value for type of PREDICATE
         };
         Deleter del;
     };
 
+    /**
+     * \brief Deallocates a value.
+     *
+     * Val_del() deallocates `x->ptr` by calling `x->del( x->ptr )` if
+     * `x->del` was not NULL.
+     *
+     * You should deallocate Val by calling this function when a Val
+     * was no longer needed.
+     *
+     * \param x    a pointer to a Val
+     */
     void Val_del( Val* x );
+    /**
+     * \brief Prints a Val to stdout as string.
+     *
+     * \param x    a pointer to a Val
+     */
     void Val_print( Val* x );
+    /**
+     * \brief Concatenates two Val, and deallocates them.
+     *
+     * \param x    a pointer to a Val
+     * \param y    a pointer to a Val
+     * \param      a Val which has concatenated string.
+     */
     Val Val_concat( Val* x, Val* y );
   
 #ifdef __cplusplus
