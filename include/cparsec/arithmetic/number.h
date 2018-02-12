@@ -2,8 +2,8 @@
 
 #pragma once
 
-#ifndef CPARSEC_PRIMITIVE_NUMBER_H
-#define CPARSEC_PRIMITIVE_NUMBER_H
+#ifndef CPARSEC_ARITHMETIC_NUMBER_H
+#define CPARSEC_ARITHMETIC_NUMBER_H
 
 #include "cparsec/gen_parser/parser_0.h"
 
@@ -17,4 +17,4 @@ extern "C" {
 }
 #endif
 
-#endif  /* CPARSEC_PRIMITIVE_NUMBER_H */
+#endif  /* CPARSEC_ARITHMETIC_NUMBER_H */
