@@ -93,9 +93,29 @@ SCENARIO( "'many1' parser combinator", "[cparsec][many1]" ) {
             }
             Val_del( &ret );
         }
+        WHEN( "parse( many1(a), \"aa\")" ) {
+            const char* input  = "aa";
+            std::string expect = "aa";
+            Val ret = parse( many1(a), input );
+            THEN( "results a string \"" + expect + "\"" ) {
+                REQUIRE( ret.type == STRING );
+                REQUIRE( expect == ret.str );
+            }
+            Val_del( &ret );
+        }
         WHEN( "parse( many1(a), \"aaa\")" ) {
             const char* input  = "aaa";
             std::string expect = "aaa";
+            Val ret = parse( many1(a), input );
+            THEN( "results a string \"" + expect + "\"" ) {
+                REQUIRE( ret.type == STRING );
+                REQUIRE( expect == ret.str );
+            }
+            Val_del( &ret );
+        }
+        WHEN( "parse( many1(a), \"aaaa\")" ) {
+            const char* input  = "aaaa";
+            std::string expect = "aaaa";
             Val ret = parse( many1(a), input );
             THEN( "results a string \"" + expect + "\"" ) {
                 REQUIRE( ret.type == STRING );
