@@ -102,7 +102,7 @@ extern "C" {
     extern const Parser alpha;    ///< A pre-instantiated singleton parser. Parses `'a'`..`'z'`, `'A'`..`'Z'`
     extern const Parser alnum;    ///< A pre-instantiated singleton parser. Parses `'a'`..`'z'`, `'A'`..`'Z'`, `'0'`..`'9'`
     extern const Parser letter;   ///< A pre-instantiated singleton parser. Parses `'a'`..`'z'`, `'A'`..`'Z'`, `'_'`
-    extern const Parser number;   ///< A pre-instantiated singleton parser. Parses decimal number
+    extern const Parser number;   ///< A pre-instantiated singleton parser. Parses one or more digits and returns as `int`
 
     //// primitive parser generators
     /**
@@ -201,6 +201,40 @@ extern "C" {
      *               `char`, applies the parser `y`.
      */
     Parser either( const Parser x, const Parser y );
+    /**
+     * \brief A primitive parser generator - first.
+     *
+     * first() creates a parser, which applies the parser `x` then the
+     * paser 'y' and returns result of `x`.
+     *
+     * ~~~c
+     * parse( first(char1('a'),number), "a1" )
+     * // --> returns CHAR_VAL('a')
+     * ~~~
+     * 
+     * \param x      a parser
+     * \param y      a parser
+     * \return       a parser, which applies the parser `x` then the
+     *               paser 'y' and returns result of `x`.
+     */
+    Parser first( Parser x, Parser y );
+    /**
+     * \brief A primitive parser generator - second.
+     *
+     * second() creates a parser, which applies the parser `x` then the
+     * paser 'y' and returns result of `y`.
+     * 
+     * ~~~c
+     * parse( second(char1('a'),number), "a1" )
+     * // --> returns INT_VAL(1)
+     * ~~~
+     * 
+     * \param x      a parser
+     * \param y      a parser
+     * \return       a parser, which applies the parser `x` then the
+     *               paser 'y' and returns result of `y`.
+     */
+    Parser second( Parser x, Parser y );
 
     //// primitive parser generators - (int, Parser)
     /**
