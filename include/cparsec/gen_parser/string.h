@@ -9,12 +9,12 @@
 #include "cparsec/core/parser.h"
 
 //// Constructs ParserSt< T (const char*) >
-#define STRING( name, x )            &(STRING_ST( name, (x) ))
-#define STRING_ST( name, x )         (ParserSt)STRING_ST_INIT( name, (x) )
+#define STRING( name, x )            &(STRING_ST( name, x ))
+#define STRING_ST( name, x )         (ParserSt)STRING_ST_INIT( name, x )
 #define STRING_ST_INIT( name, x )               \
     {                                           \
-        .ref_cnt = 0,                           \
-        .arg1 = STRING_VAL_INIT( (x) ),         \
+        .ref_cnt = -1,                          \
+        .arg1 = STRING_VAL_INIT( x ),           \
         .arg2 = NONE_VAL_INIT,                  \
         .run  = PARSER_FUNC_NAME( name ),       \
     }
@@ -25,7 +25,10 @@
     Parser name( const char* x )                        \
     {                                                   \
         Parser p = Parser_new();                        \
-        if ( p ) { *p = STRING_ST( name, x ); }         \
+        if ( p ) {                                      \
+            *p = STRING_ST( name, x );                  \
+            p->ref_cnt = 0;                             \
+        }                                               \
         return p;                                       \
     }                                                   \
     DECL_PARSER_FUNC( name )

@@ -7,10 +7,6 @@
 
 #include "cparsec/gen_parser/char.h"
 
-#define CHAR1( x )            CHAR( char1, (x) )
-#define CHAR1_ST( x )         CHAR_ST( char1, (x) )
-#define CHAR1_ST_INIT( x )    CHAR_ST_INIT( char1, (x) )
-
 #ifdef __cplusplus
 extern "C" {
 #endif

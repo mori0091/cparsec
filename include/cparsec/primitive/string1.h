@@ -7,10 +7,6 @@
 
 #include "cparsec/gen_parser/string.h"
 
-#define STRING1( x )            STRING( string1, (x) )
-#define STRING1_ST( x )         STRING_ST( string1, (x) )
-#define STRING1_ST_INIT( x )    STRING_ST_INIT( string1, (x) )
-
 #ifdef __cplusplus
 extern "C" {
 #endif

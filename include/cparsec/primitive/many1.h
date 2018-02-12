@@ -8,8 +8,6 @@
 #include "cparsec/primitive/many.h"
 #include "cparsec/primitive/seq.h"
 
-#define MANY1( x )            SEQ( x, MANY( x ) )
-
 #ifdef __cplusplus
 extern "C" {
 #endif

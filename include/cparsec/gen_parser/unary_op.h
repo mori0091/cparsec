@@ -9,12 +9,12 @@
 #include "cparsec/core/parser.h"
 
 //// Constructs ParserSt< T (Parser) >
-#define UNARY_OP( name, x )            &(UNARY_OP_ST( name, (x) ))
-#define UNARY_OP_ST( name, x )         (ParserSt)UNARY_OP_ST_INIT( name, (x) )
+#define UNARY_OP( name, x )            &(UNARY_OP_ST( name, x ))
+#define UNARY_OP_ST( name, x )         (ParserSt)UNARY_OP_ST_INIT( name, x )
 #define UNARY_OP_ST_INIT( name, x )             \
     {                                           \
-        .ref_cnt = 0,                           \
-        .arg1 = D_PARSER_VAL_INIT( (x) ),       \
+        .ref_cnt = -1,                          \
+        .arg1 = D_PARSER_VAL_INIT( x ),         \
         .arg2 = NONE_VAL_INIT,                  \
         .run  = PARSER_FUNC_NAME( name ),       \
     }
@@ -28,6 +28,7 @@
         Parser p = Parser_new();                        \
         if ( p ) {                                      \
             *p = UNARY_OP_ST( name, x );                \
+            p->ref_cnt = 0;                             \
             Parser_ref( x );                            \
         }                                               \
         return p;                                       \

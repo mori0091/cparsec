@@ -7,10 +7,6 @@
 
 #include "cparsec/gen_parser/binary_op.h"
 
-#define SEQ( x, y )            BINARY_OP( seq, (x), (y) )
-#define SEQ_ST( x, y )         BINARY_OP_ST( seq, (x), (y) )
-#define SEQ_ST_INIT( x, y )    BINARY_OP_ST_INIT( seq, (x), (y) )
-
 #ifdef __cplusplus
 extern "C" {
 #endif
