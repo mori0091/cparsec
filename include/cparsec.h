@@ -38,7 +38,9 @@ extern "C" {
      */
     void parse_test( const Parser x, const char* str );
 
-    void Parser_del( Parser p );
+    int Parser_live_count( void );
+    Parser Parser_ref( Parser p );
+    void Parser_unref( Parser p );
 
     //// pre-instantiated singleton primitive parsers
     extern const Parser any_char;

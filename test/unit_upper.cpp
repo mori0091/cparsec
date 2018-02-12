@@ -150,4 +150,5 @@ SCENARIO( "'upper' parser", "[cparsec][upper]" ) {
         }
         Val_del( &result );
     }
+    REQUIRE( 0 == Parser_live_count() );
 }

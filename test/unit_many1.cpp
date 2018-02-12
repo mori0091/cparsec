@@ -7,10 +7,13 @@
 
 SCENARIO( "'many1' parser combinator", "[cparsec][many1]" ) {
     GIVEN( "Parser a = char1('a')" ) {
+        // Parser a = Parser_ref( char1('a') );
         Parser a = char1('a');
+        REQUIRE( 1 == Parser_live_count() );
         WHEN( "parse( many1(a), \"\")" ) {
             const char* input  = "";
             Val ret = parse( many1(a), input );
+            REQUIRE( 0 == Parser_live_count() );
             THEN( "results an error" ) {
                 REQUIRE( ret.type == ERROR );
                 CHECK( ret.error );
@@ -21,6 +24,7 @@ SCENARIO( "'many1' parser combinator", "[cparsec][many1]" ) {
             const char* input  = "a";
             std::string expect = "a";
             Val ret = parse( many1(a), input );
+            REQUIRE( 0 == Parser_live_count() );
             THEN( "results a string \"" + expect + "\"" ) {
                 REQUIRE( ret.type == STRING );
                 REQUIRE( expect == ret.str );
@@ -30,6 +34,7 @@ SCENARIO( "'many1' parser combinator", "[cparsec][many1]" ) {
         WHEN( "parse( many1(a), \"b\")" ) {
             const char* input  = "b";
             Val ret = parse( many1(a), input );
+            REQUIRE( 0 == Parser_live_count() );
             THEN( "results an error" ) {
                 REQUIRE( ret.type == ERROR );
                 CHECK( ret.error );
@@ -39,6 +44,7 @@ SCENARIO( "'many1' parser combinator", "[cparsec][many1]" ) {
         WHEN( "parse( many1(a), \"c\")" ) {
             const char* input  = "c";
             Val ret = parse( many1(a), input );
+            REQUIRE( 0 == Parser_live_count() );
             THEN( "results an error" ) {
                 REQUIRE( ret.type == ERROR );
                 CHECK( ret.error );
@@ -49,6 +55,7 @@ SCENARIO( "'many1' parser combinator", "[cparsec][many1]" ) {
             const char* input  = "ab";
             std::string expect = "a";
             Val ret = parse( many1(a), input );
+            REQUIRE( 0 == Parser_live_count() );
             THEN( "results a string \"" + expect + "\"" ) {
                 REQUIRE( ret.type == STRING );
                 REQUIRE( expect == ret.str );
@@ -59,6 +66,7 @@ SCENARIO( "'many1' parser combinator", "[cparsec][many1]" ) {
             const char* input  = "abc";
             std::string expect = "a";
             Val ret = parse( many1(a), input );
+            REQUIRE( 0 == Parser_live_count() );
             THEN( "results a string \"" + expect + "\"" ) {
                 REQUIRE( ret.type == STRING );
                 REQUIRE( expect == ret.str );
@@ -69,6 +77,7 @@ SCENARIO( "'many1' parser combinator", "[cparsec][many1]" ) {
             const char* input  = "ac";
             std::string expect = "a";
             Val ret = parse( many1(a), input );
+            REQUIRE( 0 == Parser_live_count() );
             THEN( "results a string \"" + expect + "\"" ) {
                 REQUIRE( ret.type == STRING );
                 REQUIRE( expect == ret.str );
@@ -78,6 +87,7 @@ SCENARIO( "'many1' parser combinator", "[cparsec][many1]" ) {
         WHEN( "parse( many1(a), \"ba\")" ) {
             const char* input  = "ba";
             Val ret = parse( many1(a), input );
+            REQUIRE( 0 == Parser_live_count() );
             THEN( "results an error" ) {
                 REQUIRE( ret.type == ERROR );
                 CHECK( ret.error );
@@ -87,6 +97,7 @@ SCENARIO( "'many1' parser combinator", "[cparsec][many1]" ) {
         WHEN( "parse( many1(a), \"bab\")" ) {
             const char* input  = "bab";
             Val ret = parse( many1(a), input );
+            REQUIRE( 0 == Parser_live_count() );
             THEN( "results an error" ) {
                 REQUIRE( ret.type == ERROR );
                 CHECK( ret.error );
@@ -97,6 +108,7 @@ SCENARIO( "'many1' parser combinator", "[cparsec][many1]" ) {
             const char* input  = "aa";
             std::string expect = "aa";
             Val ret = parse( many1(a), input );
+            REQUIRE( 0 == Parser_live_count() );
             THEN( "results a string \"" + expect + "\"" ) {
                 REQUIRE( ret.type == STRING );
                 REQUIRE( expect == ret.str );
@@ -107,6 +119,7 @@ SCENARIO( "'many1' parser combinator", "[cparsec][many1]" ) {
             const char* input  = "aaa";
             std::string expect = "aaa";
             Val ret = parse( many1(a), input );
+            REQUIRE( 0 == Parser_live_count() );
             THEN( "results a string \"" + expect + "\"" ) {
                 REQUIRE( ret.type == STRING );
                 REQUIRE( expect == ret.str );
@@ -117,6 +130,7 @@ SCENARIO( "'many1' parser combinator", "[cparsec][many1]" ) {
             const char* input  = "aaaa";
             std::string expect = "aaaa";
             Val ret = parse( many1(a), input );
+            REQUIRE( 0 == Parser_live_count() );
             THEN( "results a string \"" + expect + "\"" ) {
                 REQUIRE( ret.type == STRING );
                 REQUIRE( expect == ret.str );
@@ -127,12 +141,14 @@ SCENARIO( "'many1' parser combinator", "[cparsec][many1]" ) {
             const char* input  = "aaabbb";
             std::string expect = "aaa";
             Val ret = parse( many1(a), input );
+            REQUIRE( 0 == Parser_live_count() );
             THEN( "results a string \"" + expect + "\"" ) {
                 REQUIRE( ret.type == STRING );
                 REQUIRE( expect == ret.str );
             }
             Val_del( &ret );
         }
-        Parser_del( a );
+        // Parser_unref( a );
     }
+    REQUIRE( 0 == Parser_live_count() );
 }
