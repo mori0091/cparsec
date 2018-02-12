@@ -4,7 +4,7 @@
 #include "cparsec/primitive/char1.h"
 
 // \todo error message should be "expected <X> but was <y>"
-DEF_GEN_PARSER__STRING( string1 )
+DEF_PARSER__STRING( string1 )
 {
     const char* expect = self->arg1.str;
     const char* p = expect;

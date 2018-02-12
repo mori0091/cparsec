@@ -21,7 +21,7 @@
 
 
 //// Define a parser generator `Parser<T> name( char x )`
-#define DEF_GEN_PARSER__CHAR( name )                    \
+#define DEF_PARSER__CHAR( name )                        \
     Parser name( char x )                               \
     {                                                   \
         Parser p = Parser_new();                        \

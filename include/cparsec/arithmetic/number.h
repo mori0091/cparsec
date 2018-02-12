@@ -5,7 +5,7 @@
 #ifndef CPARSEC_ARITHMETIC_NUMBER_H
 #define CPARSEC_ARITHMETIC_NUMBER_H
 
-#include "cparsec/gen_parser/parser_0.h"
+#include "cparsec/gen_parser/no_args.h"
 
 #ifdef __cplusplus
 extern "C" {

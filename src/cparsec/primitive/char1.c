@@ -3,7 +3,7 @@
 #include "cparsec/primitive/char1.h"
 
 // \todo error message should be "expected <X> but was <y>"
-DEF_GEN_PARSER__CHAR( char1 )
+DEF_PARSER__CHAR( char1 )
 {
     char expect = self->arg1.c;
     Val ret = Source_peek( psrc );

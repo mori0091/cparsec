@@ -21,7 +21,7 @@
 
 
 //// Define a parser generator `Parser<T> name( const char* x )`
-#define DEF_GEN_PARSER__STRING( name )                  \
+#define DEF_PARSER__STRING( name )                      \
     Parser name( const char* x )                        \
     {                                                   \
         Parser p = Parser_new();                        \

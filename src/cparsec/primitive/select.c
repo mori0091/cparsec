@@ -2,7 +2,7 @@
 
 #include "cparsec/primitive/select.h"
 
-DEF_GEN_PARSER__BINARY_OP( first )
+DEF_PARSER__BINARY_OP( first )
 {
     Val x = RUN_PARSER( self->arg1.parser );
     if ( x.type == ERROR ) return x;
@@ -15,7 +15,7 @@ DEF_GEN_PARSER__BINARY_OP( first )
     return x;
 }
 
-DEF_GEN_PARSER__BINARY_OP( second )
+DEF_PARSER__BINARY_OP( second )
 {
     Val x = RUN_PARSER( self->arg1.parser );
     if ( x.type == ERROR ) return x;

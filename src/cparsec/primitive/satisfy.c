@@ -2,7 +2,7 @@
 
 #include "cparsec/primitive/satisfy.h"
 
-DEF_GEN_PARSER__PREDICATE( satisfy )
+DEF_PARSER__PREDICATE( satisfy )
 {
     Predicate pred = self->arg1.predicate;
     Val ret = Source_peek( psrc );

@@ -3,7 +3,7 @@
 #include "cparsec/primitive/either.h"
 
 // \todo error message should be "expected <X> but was <y>"
-DEF_GEN_PARSER__BINARY_OP( either )
+DEF_PARSER__BINARY_OP( either )
 {
     Source bak = *psrc;
     Val x = RUN_PARSER( self->arg1.parser );
