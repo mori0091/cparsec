@@ -14,17 +14,17 @@
 extern "C" {
 #endif
 
-  //// primitive predicates
-  bool is_any_char( char c );
-  bool is_digit( char c );
-  bool is_lower( char c );
-  bool is_upper( char c );
-  bool is_alpha( char c );
-  bool is_alnum( char c );
-  bool is_letter( char c );
-  
+    //// primitive predicates
+    bool is_any_char( char c );
+    bool is_digit( char c );
+    bool is_lower( char c );
+    bool is_upper( char c );
+    bool is_alpha( char c );
+    bool is_alnum( char c );
+    bool is_letter( char c );
+
 #ifdef __cplusplus
 }
 #endif
 
-#endif	/* CPARSEC_PRIMITIVE_SINGLETON_H */
+#endif  /* CPARSEC_PRIMITIVE_SINGLETON_H */

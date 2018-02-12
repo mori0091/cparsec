@@ -15,10 +15,10 @@
 extern "C" {
 #endif
 
-  extern DECL_PARSER_FUNC( seq );
-  
+    extern DECL_PARSER_FUNC( seq );
+
 #ifdef __cplusplus
 }
 #endif
 
-#endif	/* CPARSEC_PRIMITIVE_SEQ_H */
+#endif  /* CPARSEC_PRIMITIVE_SEQ_H */

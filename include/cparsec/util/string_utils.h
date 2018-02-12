@@ -27,22 +27,22 @@
 #define DEF_STRING( _msg_, ... )           DEF_STRING_1( _msg_, __VA_ARGS__ )
 #define DEF_STRING_1( _msg_, ... )         DEF_STRING_2( _msg_, _msg_ ## __len_gth, __VA_ARGS__ )
 #define DEF_STRING_2( _msg_, _len_, ... )  DEF_STRING_3( _msg_, _len_, __VA_ARGS__ )
-#define DEF_STRING_3( _msg_, _len_, ... )		\
-  size_t _len_ = 1;					\
-  {							\
-    const char* _s[] = { __VA_ARGS__, NULL };		\
-    for ( int i = 0; _s[i]; ++i ) {			\
-      _len_ += strlen( _s[i] );				\
-    }							\
-  }							\
-  char _msg_[_len_];					\
-  _msg_[0] = '\0';					\
-  do {							\
-    const char* _s[] = { __VA_ARGS__, NULL };		\
-    for ( int i = 0; _s[i]; ++i ) {			\
-      strcat( _msg_, _s[i] );				\
-    }							\
-  } while(0)
+#define DEF_STRING_3( _msg_, _len_, ... )               \
+    size_t _len_ = 1;                                   \
+    {                                                   \
+        const char* _s[] = { __VA_ARGS__, NULL };       \
+        for ( int i = 0; _s[i]; ++i ) {                 \
+            _len_ += strlen( _s[i] );                   \
+        }                                               \
+    }                                                   \
+    char _msg_[_len_];                                  \
+    _msg_[0] = '\0';                                    \
+    do {                                                \
+        const char* _s[] = { __VA_ARGS__, NULL };       \
+        for ( int i = 0; _s[i]; ++i ) {                 \
+            strcat( _msg_, _s[i] );                     \
+        }                                               \
+    } while(0)
 
 #ifdef __cplusplus
 extern "C" {
@@ -52,4 +52,4 @@ extern "C" {
 }
 #endif
 
-#endif	/* CPARSEC_UTIL_STRING_UTILS_H */
+#endif  /* CPARSEC_UTIL_STRING_UTILS_H */

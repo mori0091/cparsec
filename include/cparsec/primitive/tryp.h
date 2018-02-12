@@ -15,10 +15,10 @@
 extern "C" {
 #endif
 
-  extern DECL_PARSER_FUNC( tryp );
+    extern DECL_PARSER_FUNC( tryp );
 
 #ifdef __cplusplus
 }
 #endif
 
-#endif	/* CPARSEC_PRIMITIVE_TRYP_H */
+#endif  /* CPARSEC_PRIMITIVE_TRYP_H */

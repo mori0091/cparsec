@@ -18,4 +18,4 @@ extern "C" {
 }
 #endif
 
-#endif	/* CPARSEC_PRIMITIVE_MANY1_H */
+#endif  /* CPARSEC_PRIMITIVE_MANY1_H */

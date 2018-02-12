@@ -46,42 +46,42 @@
 extern "C" {
 #endif
 
-  typedef struct Val Val;
-  typedef bool (*Predicate)( char );
-  typedef void (*Deleter)( void* );
+    typedef struct Val Val;
+    typedef bool (*Predicate)( char );
+    typedef void (*Deleter)( void* );
 
-  enum ValType {
-    ERROR,			///< const char* error
-    CHAR,			///< char c
-    INT,			///< int i
-    DOUBLE,			///< double d
-    PTR,			///< void* ptr
-    STRING,			///< const char* str
-    PARSER,			///< Parser parser
-    PREDICATE,			///< Predicate predicate
-  };
-
-  struct Val {
-    enum  ValType  type;
-    union {
-      const char*      error;
-      char             c;
-      int              i;
-      double           d;
-      void*            ptr;
-      const char*      str;
-      struct ParserSt* parser;
-      Predicate        predicate;
+    enum ValType {
+        ERROR,                  ///< const char* error
+        CHAR,                   ///< char c
+        INT,                    ///< int i
+        DOUBLE,                 ///< double d
+        PTR,                    ///< void* ptr
+        STRING,                 ///< const char* str
+        PARSER,                 ///< Parser parser
+        PREDICATE,              ///< Predicate predicate
     };
-    Deleter del;
-  };
 
-  void Val_del( Val* x );
-  void Val_print( Val* x );
-  Val Val_concat( Val* x, Val* y );
+    struct Val {
+        enum  ValType  type;
+        union {
+            const char*      error;
+            char             c;
+            int              i;
+            double           d;
+            void*            ptr;
+            const char*      str;
+            struct ParserSt* parser;
+            Predicate        predicate;
+        };
+        Deleter del;
+    };
+
+    void Val_del( Val* x );
+    void Val_print( Val* x );
+    Val Val_concat( Val* x, Val* y );
   
 #ifdef __cplusplus
 }
 #endif
 
-#endif	/* CPARSEC_CORE_VAL_H */
+#endif  /* CPARSEC_CORE_VAL_H */
