@@ -11,7 +11,7 @@
 #define PARSER_FUNC_NAME( name )    PARSER_FUNC_NAME_I( name )
 #define PARSER_FUNC_NAME_I( name )  name ## _run
 #define DECL_PARSER_FUNC( name )    Val PARSER_FUNC_NAME(name)( const Parser self, Source* psrc )
-#define RUN_PARSER( p )             (p)->run( (p), psrc )
+#define RUN_PARSER( p )             Parser_eval( p, psrc )
 
 #ifdef __cplusplus
 extern "C" {
@@ -33,6 +33,7 @@ extern "C" {
     void Parser_del( Parser p );
     // Parser Parser_ref( Parser p );
     // void Parser_unref( Parser p );
+    Val Parser_eval( const Parser p, Source* psrc );
 
 #ifdef __cplusplus
 }
