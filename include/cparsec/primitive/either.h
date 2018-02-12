@@ -7,10 +7,6 @@
 
 #include "cparsec/gen_parser/binary_op.h"
 
-#define EITHER( x, y )            BINARY_OP( either, (x), (y) )
-#define EITHER_ST( x, y )         BINARY_OP_ST( either, (x), (y) )
-#define EITHER_ST_INIT( x, y )    BINARY_OP_ST_INIT( either, (x), (y) )
-
 #ifdef __cplusplus
 extern "C" {
 #endif

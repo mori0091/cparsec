@@ -9,12 +9,12 @@
 #include "cparsec/core/parser.h"
 
 //// Constructs ParserSt< T (Predicate) >
-#define PREDICATE( name, x )            &(PREDICATE_ST( name, (x) ))
-#define PREDICATE_ST( name, x )         (ParserSt)PREDICATE_ST_INIT( name, (x) )
+#define PREDICATE( name, x )            &(PREDICATE_ST( name, x ))
+#define PREDICATE_ST( name, x )         (ParserSt)PREDICATE_ST_INIT( name, x )
 #define PREDICATE_ST_INIT( name, x )            \
     {                                           \
         .ref_cnt = -1,                          \
-        .arg1 = PREDICATE_VAL_INIT( (x) ),      \
+        .arg1 = PREDICATE_VAL_INIT( x ),        \
         .arg2 = NONE_VAL_INIT,                  \
         .run  = PARSER_FUNC_NAME( name ),       \
     }

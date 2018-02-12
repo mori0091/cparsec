@@ -9,13 +9,13 @@
 #include "cparsec/core/parser.h"
 
 //// Constructs ParserSt< T (Parser, Parser) >
-#define BINARY_OP( name, x, y )            &(BINARY_OP_ST( name, (x), (y) ))
-#define BINARY_OP_ST( name, x, y )         (ParserSt)BINARY_OP_ST_INIT( name, (x), (y) )
+#define BINARY_OP( name, x, y )            &(BINARY_OP_ST( name, x, y ))
+#define BINARY_OP_ST( name, x, y )         (ParserSt)BINARY_OP_ST_INIT( name, x, y )
 #define BINARY_OP_ST_INIT( name, x, y )         \
     {                                           \
-        .ref_cnt = 0,                           \
-        .arg1 = D_PARSER_VAL_INIT( (x) ),       \
-        .arg2 = D_PARSER_VAL_INIT( (y) ),       \
+        .ref_cnt = -1,                          \
+        .arg1 = D_PARSER_VAL_INIT( x ),         \
+        .arg2 = D_PARSER_VAL_INIT( y ),         \
         .run  = PARSER_FUNC_NAME( name ),       \
     }
 
@@ -29,6 +29,7 @@
         Parser p = Parser_new();                        \
         if ( p ) {                                      \
             *p = BINARY_OP_ST( name, x, y );            \
+            p->ref_cnt = 0;                             \
             Parser_ref( x );                            \
             Parser_ref( y );                            \
         }                                               \

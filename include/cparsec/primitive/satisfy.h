@@ -7,10 +7,6 @@
 
 #include "cparsec/gen_parser/predicate.h"
 
-#define SATISFY( x )            PREDICATE( satisfy, (x) )
-#define SATISFY_ST( x )         PREDICATE_ST( satisfy, (x) )
-#define SATISFY_ST_INIT( x )    PREDICATE_ST_INIT( satisfy, (x) )
-
 #ifdef __cplusplus
 extern "C" {
 #endif

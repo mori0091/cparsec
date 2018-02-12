@@ -9,13 +9,13 @@
 #include "cparsec/core/parser.h"
 
 //// Constructs ParserSt< T (int, Parser) >
-#define INT_PARSER( name, n, x )            &(INT_PARSER_ST( name, (n), (x) ))
-#define INT_PARSER_ST( name, n, x )         (ParserSt)INT_PARSER_ST_INIT( name, (n), (x) )
+#define INT_PARSER( name, n, x )            &(INT_PARSER_ST( name, n, x ))
+#define INT_PARSER_ST( name, n, x )         (ParserSt)INT_PARSER_ST_INIT( name, n, x )
 #define INT_PARSER_ST_INIT( name, n, x )        \
     {                                           \
-        .ref_cnt = 0,                           \
-        .arg1 = INT_VAL_INIT( (n) ),            \
-        .arg2 = D_PARSER_VAL_INIT( (x) ),       \
+        .ref_cnt = -1,                          \
+        .arg1 = INT_VAL_INIT( n ),              \
+        .arg2 = D_PARSER_VAL_INIT( x ),         \
         .run  = PARSER_FUNC_NAME( name ),       \
     }
 
@@ -28,6 +28,7 @@
         Parser p = Parser_new();                \
         if ( p ) {                              \
             *p = INT_PARSER_ST( name, n, x );   \
+            p->ref_cnt = 0;                     \
             Parser_ref( x );                    \
         }                                       \
         return p;                               \
