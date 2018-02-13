@@ -12,11 +12,12 @@ static int Val_snprint( char* buf, size_t maxlen, const Val* x )
 {
     assert( x );
     switch ( x->type ) {
+    case NONE:      return snprintf( buf, maxlen, "<{NONE}>" );
     case ERROR:     return snprintf( buf, maxlen, "%s", x->error );
     case CHAR:      return snprintf( buf, maxlen, "%c", x->c );
     case INT:       return snprintf( buf, maxlen, "%d", x->i );
     case DOUBLE:    return snprintf( buf, maxlen, "%f", x->d );
-    case PTR:       return snprintf( buf, maxlen, "%p", x->ptr );
+    case PTR:       return snprintf( buf, maxlen, "<{void*(%p)}>", x->ptr );
     case STRING:    return snprintf( buf, maxlen, "%s", x->str );
     case PARSER:    return snprintf( buf, maxlen, "<{Parser(%p)}>", x->ptr );
     case PREDICATE: return snprintf( buf, maxlen, "<{Predicate(\?\?)}>" );

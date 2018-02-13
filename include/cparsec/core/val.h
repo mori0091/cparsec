@@ -23,7 +23,11 @@
  *
  * \param T    An enum ValType or one of D_ERROR, D_PTR, D_STRING, D_PARSER.
  */
+#ifdef __cplusplus
+#define VAL(T)         VAL_INIT(T)
+#else
 #define VAL(T)         (Val)VAL_INIT(T)
+#endif
 
 /**
  * \brief Constructs various initializer of Val.
@@ -42,8 +46,42 @@
 #define VAL_INIT_I(T)  T ## _VAL_INIT
 
 //// macros of various initializer of Val
+#ifdef __cplusplus
+
+#define      NONE_VAL_INIT       Val_NONE()
+#define     ERROR_VAL_INIT( x )  Val_ERROR( (x) )
+#define      CHAR_VAL_INIT( x )  Val_CHAR( (x) )
+#define       INT_VAL_INIT( x )  Val_INT( (x) )
+#define    DOUBLE_VAL_INIT( x )  Val_DOUBLE( (x) )
+#define       PTR_VAL_INIT( x )  Val_PTR( (x) )
+#define    STRING_VAL_INIT( x )  Val_STRING( (x) )
+#define    PARSER_VAL_INIT( x )  Val_PARSER( (x) )
+#define PREDICATE_VAL_INIT( x )  Val_PREDICATE( (x) )
+#define      INT8_VAL_INIT( x )  Val_INT8( (x) )
+#define        I8_VAL_INIT       INT8_VAL_INIT
+#define     INT16_VAL_INIT( x )  Val_INT16( (x) )
+#define       I16_VAL_INIT       INT16_VAL_INIT
+#define     INT32_VAL_INIT( x )  Val_INT32( (x) )
+#define       I32_VAL_INIT       INT32_VAL_INIT
+#define     INT64_VAL_INIT( x )  Val_INT64( (x) )
+#define       I64_VAL_INIT       INT64_VAL_INIT
+#define     UINT8_VAL_INIT( x )  Val_UINT8( (x) )
+#define        U8_VAL_INIT       UINT8_VAL_INIT
+#define    UINT16_VAL_INIT( x )  Val_UINT16( (x) )
+#define       U16_VAL_INIT       UINT16_VAL_INIT
+#define    UINT32_VAL_INIT( x )  Val_UINT32( (x) )
+#define       U32_VAL_INIT       UINT32_VAL_INIT
+#define    UINT64_VAL_INIT( x )  Val_UINT64( (x) )
+#define       U64_VAL_INIT       UINT64_VAL_INIT
+#define   D_ERROR_VAL_INIT( x )  Val_D_ERROR( (x) )
+#define     D_PTR_VAL_INIT( x )  Val_D_PTR( (x) )
+#define  D_STRING_VAL_INIT( x )  Val_D_STRING( (x) )
+#define  D_PARSER_VAL_INIT( x )  Val_D_PARSER( (x) )
+
+#else
+
 /** \note use VAL_INIT(NONE) instead. */
-#define      NONE_VAL_INIT       { 0 }
+#define      NONE_VAL_INIT       { .type = NONE     , .ptr       = 0  , .del = 0 }
 /** \note use VAL_INIT(ERROR)(x) instead. */
 #define     ERROR_VAL_INIT( x )  { .type = ERROR    , .error     = (x), .del = 0 }
 /** \note use VAL_INIT(CHAR)(x) instead. */
@@ -102,6 +140,8 @@
 #define  D_STRING_VAL_INIT( x )  { .type = STRING   , .str       = (x), .del = free }
 /** \note use VAL_INIT(D_PARSER)(x) instead. */
 #define  D_PARSER_VAL_INIT( x )  { .type = PARSER   , .parser    = (x), .del = (Deletor)Parser_unref }
+
+#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -172,6 +212,30 @@ extern "C" {
         /** \brief A deletor function of the value. NULL if the value does not need to be deleted. */
         Deletor del;
     };
+
+    extern void Parser_unref( struct ParserSt* );
+
+    inline Val Val_NONE  ( void )                      { Val ret; ret.type = NONE;      ret.ptr = 0;               ret.del = 0; return ret; }
+    inline Val Val_ERROR ( const char* error )         { Val ret; ret.type = ERROR;     ret.error = error;         ret.del = 0; return ret; }
+    inline Val Val_CHAR  ( char c )                    { Val ret; ret.type = CHAR;      ret.c = c;                 ret.del = 0; return ret; }
+    inline Val Val_INT   ( int i )                     { Val ret; ret.type = INT;       ret.i = i;                 ret.del = 0; return ret; }
+    inline Val Val_DOUBLE( double d  )                 { Val ret; ret.type = DOUBLE;    ret.d = d;                 ret.del = 0; return ret; }
+    inline Val Val_PTR   ( void* ptr )                 { Val ret; ret.type = PTR;       ret.ptr = ptr;             ret.del = 0; return ret; }
+    inline Val Val_STRING( const char* str )           { Val ret; ret.type = STRING;    ret.str = str;             ret.del = 0; return ret; }
+    inline Val Val_PARSER( struct ParserSt* parser )   { Val ret; ret.type = PARSER;    ret.parser = parser;       ret.del = 0; return ret; }
+    inline Val Val_PREDICATE( Predicate predicate )    { Val ret; ret.type = PREDICATE; ret.predicate = predicate; ret.del = 0; return ret; }
+    inline Val Val_INT8  ( int8_t i8 )                 { Val ret; ret.type = INT8;      ret.i8 = i8;               ret.del = 0; return ret; }
+    inline Val Val_INT16 ( int16_t i16 )               { Val ret; ret.type = INT16;     ret.i16 = i16;             ret.del = 0; return ret; }
+    inline Val Val_INT32 ( int32_t i32 )               { Val ret; ret.type = INT32;     ret.i32 = i32;             ret.del = 0; return ret; }
+    inline Val Val_INT64 ( int64_t i64 )               { Val ret; ret.type = INT64;     ret.i64 = i64;             ret.del = 0; return ret; }
+    inline Val Val_UINT8 ( uint8_t u8 )                { Val ret; ret.type = UINT8;     ret.u8 = u8;               ret.del = 0; return ret; }
+    inline Val Val_UINT16( uint16_t u16 )              { Val ret; ret.type = UINT16;    ret.u16 = u16;             ret.del = 0; return ret; }
+    inline Val Val_UINT32( uint32_t u32 )              { Val ret; ret.type = UINT32;    ret.u32 = u32;             ret.del = 0; return ret; }
+    inline Val Val_UINT64( uint64_t u64 )              { Val ret; ret.type = UINT64;    ret.u64 = u64;             ret.del = 0; return ret; }
+    inline Val Val_D_ERROR ( const char* error )       { Val ret; ret.type = ERROR;     ret.error = error;         ret.del = free; return ret; }
+    inline Val Val_D_PTR   ( void* ptr )               { Val ret; ret.type = PTR;       ret.ptr = ptr;             ret.del = free; return ret; }
+    inline Val Val_D_STRING( const char* str )         { Val ret; ret.type = STRING;    ret.str = str;             ret.del = free; return ret; }
+    inline Val Val_D_PARSER( struct ParserSt* parser ) { Val ret; ret.type = PARSER;    ret.parser = parser;       ret.del = (Deletor)Parser_unref; return ret; }
 
     /**
      * \brief Deallocates a value.
