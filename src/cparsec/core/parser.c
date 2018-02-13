@@ -17,8 +17,8 @@ Parser Parser_new( void )
         ++Parser__live_count;
         *p = ( ParserSt ){
             .ref_cnt = 0,
-            .arg1 = NONE_VAL_INIT,
-            .arg2 = NONE_VAL_INIT,
+            .arg1 = VAL_INIT(NONE),
+            .arg2 = VAL_INIT(NONE),
             .run  = NULL,
         };
     }

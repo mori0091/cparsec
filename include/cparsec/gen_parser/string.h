@@ -14,8 +14,8 @@
 #define STRING_ST_INIT( name, x )               \
     {                                           \
         .ref_cnt = -1,                          \
-        .arg1 = STRING_VAL_INIT( x ),           \
-        .arg2 = NONE_VAL_INIT,                  \
+        .arg1 = VAL_INIT(STRING)( x ),          \
+        .arg2 = VAL_INIT(NONE),                 \
         .run  = PARSER_FUNC_NAME( name ),       \
     }
 

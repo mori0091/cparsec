@@ -13,5 +13,5 @@ DEF_PARSER__STRING( string1 )
         if ( ret.type == ERROR ) return ret;
         p++;
     }
-    return STRING_VAL( expect );
+    return VAL(STRING)( expect );
 }

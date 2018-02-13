@@ -5,7 +5,7 @@
 // \todo error message should be "expected <X> but was <y>"
 DEF_PARSER__UNARY_OP( many )
 {
-    Val ret = STRING_VAL( "" );
+    Val ret = VAL(STRING)( "" );
     for (;;) {
         Val x = RUN_PARSER( self->arg1.parser );
         if ( x.type == ERROR ) {

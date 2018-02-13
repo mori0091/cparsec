@@ -8,9 +8,9 @@
 
 Val parse( const Parser x, const char* str )
 {
-    if ( ! x ) { return ERROR_VAL( "null parser" ); }
+    if ( ! x ) { return VAL(ERROR)( "null parser" ); }
     Parser_ref( x );
-    Val ret = ERROR_VAL( "null text" );
+    Val ret = VAL(ERROR)( "null text" );
     if ( str ) {
         Source s = Source_init( str );
         ret = x->run( x, &s );

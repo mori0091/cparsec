@@ -12,7 +12,7 @@ DEF_PARSER__NO_ARGS( number )
     UNUSED_VARIABLE( self );
     Val x = RUN_PARSER( many1( digit ) );
     if ( x.type == ERROR ) return x;
-    Val ret = INT_VAL( atoi( x.str ) );
+    Val ret = VAL(INT)( atoi( x.str ) );
     Val_del( &x );
     return ret;
 }
