@@ -8,16 +8,27 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
+//// macro to construst various compound literal of Val
+#define VAL(T)         (Val)VAL_INIT(T)
+//// macro for various initializer of Val
+#define VAL_INIT(T)    VAL_INIT_I(T)
+#define VAL_INIT_I(T)  T ## _VAL_INIT
+
 //// macros of various compound literal of Val
-#define            NONE_VAL       (Val)NONE_VAL_INIT
-#define           ERROR_VAL( x )  (Val)ERROR_VAL_INIT((x))
-#define            CHAR_VAL( x )  (Val)CHAR_VAL_INIT((x))
-#define             INT_VAL( x )  (Val)INT_VAL_INIT((x))
-#define          DOUBLE_VAL( x )  (Val)DOUBLE_VAL_INIT((x))
-#define             PTR_VAL( x )  (Val)PTR_VAL_INIT((x))
-#define          STRING_VAL( x )  (Val)STRING_VAL_INIT((x))
-#define          PARSER_VAL( x )  (Val)PARSER_VAL_INIT((x))
-#define       PREDICATE_VAL( x )  (Val)PREDICATE_VAL_INIT((x))
+#define      NONE_VAL  VAL(NONE)
+#define     ERROR_VAL  VAL(ERROR)
+#define      CHAR_VAL  VAL(CHAR)
+#define       INT_VAL  VAL(INT)
+#define    DOUBLE_VAL  VAL(DOUBLE)
+#define       PTR_VAL  VAL(PTR)
+#define    STRING_VAL  VAL(STRING)
+#define    PARSER_VAL  VAL(PARSER)
+#define PREDICATE_VAL  VAL(PREDICATE)
+//// macros of various compound literal of Val, whose value must be deallocated
+#define   D_ERROR_VAL  VAL(D_ERROR)
+#define     D_PTR_VAL  VAL(D_PTR)
+#define  D_STRING_VAL  VAL(D_STRING)
+#define  D_PARSER_VAL  VAL(D_PARSER)
 
 //// macros of various initializer of Val
 #define      NONE_VAL_INIT       { 0 }
@@ -29,12 +40,6 @@
 #define    STRING_VAL_INIT( x )  { .type = STRING   , .str       = (x), .del = 0 }
 #define    PARSER_VAL_INIT( x )  { .type = PARSER   , .parser    = (x), .del = 0 }
 #define PREDICATE_VAL_INIT( x )  { .type = PREDICATE, .predicate = (x), .del = 0 }
-
-//// macros of various compound literal of Val, whose value must be deallocated
-#define        D_ERROR_VAL( x )  (Val)D_ERROR_VAL_INIT((x))
-#define          D_PTR_VAL( x )  (Val)D_PTR_VAL_INIT((x))
-#define       D_STRING_VAL( x )  (Val)D_STRING_VAL_INIT((x))
-#define       D_PARSER_VAL( x )  (Val)D_STRING_VAL_INIT((x))
 
 //// macros of various initializer of Val, whose value must be deallocated
 #define   D_ERROR_VAL_INIT( x )  { .type = ERROR    , .str       = (x), .del = free }
