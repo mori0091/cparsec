@@ -49,5 +49,5 @@ Val Val_concat( Val* x, Val* y )
     Val_del( x );
     Val_del( y );
     DEF_STRING( sxy, sx, sy );
-    return D_STRING_VAL( strdup( sxy ) );
+    return VAL(D_STRING)( strdup( sxy ) );
 }
