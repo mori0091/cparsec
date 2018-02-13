@@ -14,8 +14,8 @@
 #define INT_PARSER_ST_INIT( name, n, x )        \
     {                                           \
         .ref_cnt = -1,                          \
-        .arg1 = INT_VAL_INIT( n ),              \
-        .arg2 = D_PARSER_VAL_INIT( x ),         \
+        .arg1 = VAL_INIT(INT)( n ),             \
+        .arg2 = VAL_INIT(D_PARSER)( x ),        \
         .run  = PARSER_FUNC_NAME( name ),       \
     }
 

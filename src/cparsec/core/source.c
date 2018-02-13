@@ -18,7 +18,7 @@ Val Source_peek( Source* src )
     assert( src );
     char c = *( src->s );
     if ( ! c ) { return Source_error( src, "too short" ); }
-    return CHAR_VAL( c );
+    return VAL(CHAR)( c );
 }
 
 Val Source_next( Source* src )
@@ -59,5 +59,5 @@ Val Source_error( const Source* src, const char* msg )
         }
     }
     DEF_STRING( err, "[line ", sline, ", col ", scol, "] ", msg, ch );
-    return D_ERROR_VAL( strdup( err ) );
+    return VAL(D_ERROR)( strdup( err ) );
 }

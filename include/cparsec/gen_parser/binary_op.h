@@ -14,8 +14,8 @@
 #define BINARY_OP_ST_INIT( name, x, y )         \
     {                                           \
         .ref_cnt = -1,                          \
-        .arg1 = D_PARSER_VAL_INIT( x ),         \
-        .arg2 = D_PARSER_VAL_INIT( y ),         \
+        .arg1 = VAL_INIT(D_PARSER)( x ),        \
+        .arg2 = VAL_INIT(D_PARSER)( y ),        \
         .run  = PARSER_FUNC_NAME( name ),       \
     }
 

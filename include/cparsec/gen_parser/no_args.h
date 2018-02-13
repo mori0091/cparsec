@@ -14,8 +14,8 @@
 #define NO_ARGS_ST_INIT( name )                 \
     {                                           \
         .ref_cnt = -1,                          \
-        .arg1 = NONE_VAL_INIT,                  \
-        .arg2 = NONE_VAL_INIT,                  \
+        .arg1 = VAL_INIT(NONE),                 \
+        .arg2 = VAL_INIT(NONE),                 \
         .run  = PARSER_FUNC_NAME( name ),       \
     }
 
