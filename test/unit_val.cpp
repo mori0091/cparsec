@@ -36,6 +36,20 @@ SCENARIO( "Tests various type of Val", "[cparsec][val]" ) {
             }
             Val_del( &x );
         }
+        GIVEN( "Val x = VAL(ERROR)(NULL)" ) {
+            Val x = VAL(ERROR)(NULL);
+            REQUIRE( ERROR == x.type );
+            REQUIRE( nullptr == x.error );
+            WHEN( "x = Val_concat( &nil, &x )" ) {
+                x = Val_concat( &nil, &x );
+                THEN( "x's type is STRING" )
+                    AND_THEN( "x's value is \"<{null:ERROR}>\"" ) {
+                    REQUIRE( STRING == x.type );
+                    REQUIRE( std::string("<{null:ERROR}>") == x.str );
+                }
+            }
+            Val_del( &x );
+        }
         GIVEN( "Val x = VAL(CHAR)('a')" ) {
             Val x = VAL(CHAR)('a');
             REQUIRE( CHAR == x.type );
@@ -81,13 +95,13 @@ SCENARIO( "Tests various type of Val", "[cparsec][val]" ) {
         GIVEN( "Val x = VAL(PTR)(NULL)" ) {
             Val x = VAL(PTR)(NULL);
             REQUIRE( PTR == x.type );
-            REQUIRE( NULL == x.ptr );
+            REQUIRE( nullptr == x.ptr );
             WHEN( "x = Val_concat( &nil, &x )" ) {
                 x = Val_concat( &nil, &x );
                 THEN( "x's type is STRING" )
-                    AND_THEN( "x's value is \"<{void*(0x0)}>\"" ) {
+                    AND_THEN( "x's value is \"<{null:void*}>\"" ) {
                     REQUIRE( STRING == x.type );
-                    REQUIRE( std::string("<{void*(0x0)}>") == x.str );
+                    REQUIRE( std::string("<{null:void*}>") == x.str );
                 }
             }
             Val_del( &x );
@@ -106,16 +120,30 @@ SCENARIO( "Tests various type of Val", "[cparsec][val]" ) {
             }
             Val_del( &x );
         }
-        GIVEN( "Val x = VAL(PARSER)(NULL)" ) {
-            Val x = VAL(PARSER)(NULL);
-            REQUIRE( PARSER == x.type );
-            REQUIRE( NULL == x.parser );
+        GIVEN( "Val x = VAL(STRING)(NULL)" ) {
+            Val x = VAL(STRING)(NULL);
+            REQUIRE( STRING == x.type );
+            REQUIRE( nullptr == x.str );
             WHEN( "x = Val_concat( &nil, &x )" ) {
                 x = Val_concat( &nil, &x );
                 THEN( "x's type is STRING" )
-                    AND_THEN( "x's value is \"<{Parser(0x0)}>\"" ) {
+                    AND_THEN( "x's value is \"<{null:const char*}>\"" ) {
                     REQUIRE( STRING == x.type );
-                    REQUIRE( std::string("<{Parser(0x0)}>") == x.str );
+                    REQUIRE( std::string("<{null:const char*}>") == x.str );
+                }
+            }
+            Val_del( &x );
+        }
+        GIVEN( "Val x = VAL(PARSER)(NULL)" ) {
+            Val x = VAL(PARSER)(NULL);
+            REQUIRE( PARSER == x.type );
+            REQUIRE( nullptr == x.parser );
+            WHEN( "x = Val_concat( &nil, &x )" ) {
+                x = Val_concat( &nil, &x );
+                THEN( "x's type is STRING" )
+                    AND_THEN( "x's value is \"<{null:Parser}>\"" ) {
+                    REQUIRE( STRING == x.type );
+                    REQUIRE( std::string("<{null:Parser}>") == x.str );
                 }
             }
             Val_del( &x );
@@ -123,13 +151,15 @@ SCENARIO( "Tests various type of Val", "[cparsec][val]" ) {
         GIVEN( "Val x = VAL(PREDICATE)(is_digit)" ) {
             Val x = VAL(PREDICATE)(is_digit);
             REQUIRE( PREDICATE == x.type );
-            REQUIRE( is_digit == x.predicate );
+            // REQUIRE( is_digit == x.predicate );
+            Predicate pred = is_digit;
+            REQUIRE( pred == x.predicate );
             WHEN( "x = Val_concat( &nil, &x )" ) {
                 x = Val_concat( &nil, &x );
                 THEN( "x's type is STRING" )
-                    AND_THEN( "x's value is \"<{Predicate(\?\?)}>\"" ) {
+                    AND_THEN( "x's value is \"<{\?:Predicate}>\"" ) {
                     REQUIRE( STRING == x.type );
-                    REQUIRE( std::string("<{Predicate(\?\?)}>") == x.str );
+                    REQUIRE( std::string("<{\?:Predicate}>") == x.str );
                 }
             }
             Val_del( &x );
