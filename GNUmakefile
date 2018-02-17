@@ -1,5 +1,5 @@
 # -*- mode: makefile ; coding: utf-8-unix -*-
-.PHONY: all build clean show test
+.PHONY: all build clean show test test.build
 
 -include Project.mk
 
@@ -22,8 +22,7 @@ LIB_DIR = $(DST_DIR)/lib
 SRCS ?= $(if $(wildcard $(SRC_DIR)),$(shell find $(SRC_DIR) -type f -name '*.c' -o -name '*.cpp'))
 OBJS ?= $(patsubst $(SRC_DIR)/%.c,$(OBJ_DIR)/%.o,\
 	$(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,\
-	$(patsubst $(SRC_DIR)/%.cxx,$(OBJ_DIR)/%.o,\
-	$(SRCS))))
+	$(SRCS)))
 DEPS ?= $(patsubst %.o,%.d,$(OBJS))
 
 CFLAGS   += $(DEFAULT_CFLAGS)
@@ -105,12 +104,13 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp
 	@mkdir -p $(dir $@)
 	@$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) -c -o $@ $<
 
-$(TEST_RUNNER): $(TEST_TARGET)
+$(TEST_RUNNER): test.build
+test.build: $(TEST_TARGET)
 	@$(MAKE) LIBS="$(TEST_TARGET) $(LIBS)" \
 		 DST_DIR="$(DST_DIR)/test" \
 		 INC_DIR="$(INC_DIR) thirdparty/catch2" \
 		 SRC_DIR="$(TEST_DIR)" \
-		 TARGET=$@ \
+		 TARGET="$(TEST_RUNNER)" \
 		 -s \
 		 build
 
