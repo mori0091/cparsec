@@ -42,28 +42,28 @@ static int Val_snprint( char* buf, size_t maxlen, const Val* x )
     }
 }
 
-const Val Val_NONE = NONE_VAL_INIT;
-Val Val_ERROR ( const char* error )         { return (Val)ERROR_VAL_INIT(error); }
-Val Val_CHAR  ( char c )                    { return (Val)CHAR_VAL_INIT(c); }
-Val Val_INT   ( int i )                     { return (Val)INT_VAL_INIT(i); }
-Val Val_DOUBLE( double d  )                 { return (Val)DOUBLE_VAL_INIT(d); }
-Val Val_PTR   ( void* ptr )                 { return (Val)PTR_VAL_INIT(ptr); }
-Val Val_STRING( const char* str )           { return (Val)STRING_VAL_INIT(str); }
-Val Val_PARSER( struct ParserSt* parser )   { return (Val)PARSER_VAL_INIT(parser); }
-Val Val_PREDICATE( Predicate predicate )    { return (Val)PREDICATE_VAL_INIT(predicate); }
-Val Val_INT8  ( int8_t i8 )                 { return (Val)INT8_VAL_INIT(i8); }
-Val Val_INT16 ( int16_t i16 )               { return (Val)INT16_VAL_INIT(i16); }
-Val Val_INT32 ( int32_t i32 )               { return (Val)INT32_VAL_INIT(i32); }
-Val Val_INT64 ( int64_t i64 )               { return (Val)INT64_VAL_INIT(i64); }
-Val Val_UINT8 ( uint8_t u8 )                { return (Val)UINT8_VAL_INIT(u8); }
-Val Val_UINT16( uint16_t u16 )              { return (Val)UINT16_VAL_INIT(u16); }
-Val Val_UINT32( uint32_t u32 )              { return (Val)UINT32_VAL_INIT(u32); }
-Val Val_UINT64( uint64_t u64 )              { return (Val)UINT64_VAL_INIT(u64); }
-Val Val_FILTER( Filter filter )             { return (Val)FILTER_VAL_INIT(filter); }
-Val Val_D_ERROR ( const char* error )       { return (Val)D_ERROR_VAL_INIT(error); }
-Val Val_D_PTR   ( void* ptr )               { return (Val)D_PTR_VAL_INIT(ptr); }
-Val Val_D_STRING( const char* str )         { return (Val)D_STRING_VAL_INIT(str); }
-Val Val_D_PARSER( struct ParserSt* parser ) { return (Val)D_PARSER_VAL_INIT(parser); }
+const Val Val_NONE = VAL_INIT(NONE);
+Val Val_ERROR ( const char* error )         { return (Val)VAL_INIT(ERROR)(error); }
+Val Val_CHAR  ( char c )                    { return (Val)VAL_INIT(CHAR)(c); }
+Val Val_INT   ( int i )                     { return (Val)VAL_INIT(INT)(i); }
+Val Val_DOUBLE( double d  )                 { return (Val)VAL_INIT(DOUBLE)(d); }
+Val Val_PTR   ( void* ptr )                 { return (Val)VAL_INIT(PTR)(ptr); }
+Val Val_STRING( const char* str )           { return (Val)VAL_INIT(STRING)(str); }
+Val Val_PARSER( struct ParserSt* parser )   { return (Val)VAL_INIT(PARSER)(parser); }
+Val Val_PREDICATE( Predicate predicate )    { return (Val)VAL_INIT(PREDICATE)(predicate); }
+Val Val_INT8  ( int8_t i8 )                 { return (Val)VAL_INIT(INT8)(i8); }
+Val Val_INT16 ( int16_t i16 )               { return (Val)VAL_INIT(INT16)(i16); }
+Val Val_INT32 ( int32_t i32 )               { return (Val)VAL_INIT(INT32)(i32); }
+Val Val_INT64 ( int64_t i64 )               { return (Val)VAL_INIT(INT64)(i64); }
+Val Val_UINT8 ( uint8_t u8 )                { return (Val)VAL_INIT(UINT8)(u8); }
+Val Val_UINT16( uint16_t u16 )              { return (Val)VAL_INIT(UINT16)(u16); }
+Val Val_UINT32( uint32_t u32 )              { return (Val)VAL_INIT(UINT32)(u32); }
+Val Val_UINT64( uint64_t u64 )              { return (Val)VAL_INIT(UINT64)(u64); }
+Val Val_FILTER( Filter filter )             { return (Val)VAL_INIT(FILTER)(filter); }
+Val Val_D_ERROR ( const char* error )       { return (Val)VAL_INIT(D_ERROR)(error); }
+Val Val_D_PTR   ( void* ptr )               { return (Val)VAL_INIT(D_PTR)(ptr); }
+Val Val_D_STRING( const char* str )         { return (Val)VAL_INIT(D_STRING)(str); }
+Val Val_D_PARSER( struct ParserSt* parser ) { return (Val)VAL_INIT(D_PARSER)(parser); }
 
 void Val_del( Val* x )
 {
