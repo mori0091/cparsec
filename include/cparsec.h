@@ -208,8 +208,8 @@ extern "C" {
      * paser 'y' and returns result of `x`.
      *
      * ~~~c
-     * parse( first(char1('a'),number), "a1" )
-     * // --> returns CHAR_VAL('a')
+     * Val ret = parse( first(char1('a'),number), "a1" )
+     * // --> ret is VAL(CHAR)('a')
      * ~~~
      * 
      * \param x      a parser
@@ -225,8 +225,8 @@ extern "C" {
      * paser 'y' and returns result of `y`.
      * 
      * ~~~c
-     * parse( second(char1('a'),number), "a1" )
-     * // --> returns INT_VAL(1)
+     * Val ret = parse( second(char1('a'),number), "a1" )
+     * // --> ret is VAL(INT)(1)
      * ~~~
      * 
      * \param x      a parser
