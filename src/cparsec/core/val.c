@@ -37,6 +37,7 @@ static int Val_snprint( char* buf, size_t maxlen, const Val* x )
     case UINT16:         return snprintf( buf, maxlen, "%" PRIu16, x->u16 );
     case UINT32:         return snprintf( buf, maxlen, "%" PRIu32, x->u32 );
     case UINT64:         return snprintf( buf, maxlen, "%" PRIu64, x->u64 );
+    case FILTER:         return snprintf( buf, maxlen, "<{\?:Filter}>" );
     default:             return snprintf( buf, maxlen, "<{UNKNOWN}>" );
     }
 }
@@ -58,6 +59,7 @@ Val Val_UINT8 ( uint8_t u8 )                { return (Val)UINT8_VAL_INIT(u8); }
 Val Val_UINT16( uint16_t u16 )              { return (Val)UINT16_VAL_INIT(u16); }
 Val Val_UINT32( uint32_t u32 )              { return (Val)UINT32_VAL_INIT(u32); }
 Val Val_UINT64( uint64_t u64 )              { return (Val)UINT64_VAL_INIT(u64); }
+Val Val_FILTER( Filter filter )             { return (Val)FILTER_VAL_INIT(filter); }
 Val Val_D_ERROR ( const char* error )       { return (Val)D_ERROR_VAL_INIT(error); }
 Val Val_D_PTR   ( void* ptr )               { return (Val)D_PTR_VAL_INIT(ptr); }
 Val Val_D_STRING( const char* str )         { return (Val)D_STRING_VAL_INIT(str); }

@@ -6,6 +6,8 @@
 #include "cparsec.h"
 #include "cparsec/primitive/singleton.h"
 
+static Val a_filter( Val x ) { return x; }
+
 SCENARIO( "Tests various type of Val", "[cparsec][val]" ) {
     GIVEN( "Val nil = VAL(STRING)(\"\")" ) {
         Val nil = VAL(STRING)("");
@@ -160,6 +162,22 @@ SCENARIO( "Tests various type of Val", "[cparsec][val]" ) {
                     AND_THEN( "x's value is \"<{\?:Predicate}>\"" ) {
                     REQUIRE( STRING == x.type );
                     REQUIRE( std::string("<{\?:Predicate}>") == x.str );
+                }
+            }
+            Val_del( &x );
+        }
+        GIVEN( "Val x = VAL(FILTER)(a_filter)" ) {
+            Val x = VAL(FILTER)(a_filter);
+            REQUIRE( FILTER == x.type );
+            // REQUIRE( a_filter == x.filter );
+            Filter filter = a_filter;
+            REQUIRE( filter == x.filter );
+            WHEN( "x = Val_concat( &nil, &x )" ) {
+                x = Val_concat( &nil, &x );
+                THEN( "x's type is STRING" )
+                    AND_THEN( "x's value is \"<{\?:Filter}>\"" ) {
+                    REQUIRE( STRING == x.type );
+                    REQUIRE( std::string("<{\?:Filter}>") == x.str );
                 }
             }
             Val_del( &x );
