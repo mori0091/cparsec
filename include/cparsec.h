@@ -150,7 +150,7 @@ extern "C" {
      * \return       a parser, which applies the parser `x` zero times
      *               or more.
      */
-    Parser many( const Parser x );
+    Parser many( Parser x );
     /**
      * \brief A primitive parser generator - many1.
      *
@@ -161,7 +161,7 @@ extern "C" {
      * \return       a parser, which applies the parser `x` one times
      *               or more.
      */
-    Parser many1( const Parser x );
+    Parser many1( Parser x );
     /**
      * \brief A primitive parser generator - tryp.
      *
@@ -172,7 +172,7 @@ extern "C" {
      * \return       a parser, which applies the parser `x` but rewind
      *               on error.
      */
-    Parser tryp( const Parser x );
+    Parser tryp( Parser x );
 
     //// primitive parser generators - binary operator
     /**
@@ -186,7 +186,7 @@ extern "C" {
      * \return       a parser, which applies the parser `x` then the
      *               parser 'y'
      */
-    Parser seq( const Parser x, const Parser y );
+    Parser seq( Parser x, Parser y );
     /**
      * \brief A primitive parser generator - either.
      *
@@ -200,7 +200,7 @@ extern "C" {
      *               caused an error and `x` didn't consume any
      *               `char`, applies the parser `y`.
      */
-    Parser either( const Parser x, const Parser y );
+    Parser either( Parser x, Parser y );
     /**
      * \brief A primitive parser generator - first.
      *
@@ -245,8 +245,21 @@ extern "C" {
      * \param x      a parser
      * \return       a parser, which applies the parser `x` `n` times.
      */
-    Parser rep( int n, const Parser x );
-  
+    Parser rep( int n, Parser x );
+
+    /**
+     * \brief A primitive parser generator - apply.
+     *
+     * apply() creates a parser, which applies the parser `x` then
+     * applies a filter `f` to the result of `x`.
+     * 
+     * \param f      a filter function type of Var (*)(Var)
+     * \param x      a parser
+     * \return       a parser, which applies the parser `x` then
+     *               applies a filter `f` to the result of `x`.
+     */
+    Parser apply( Filter f, Parser x );
+
 #ifdef __cplusplus
 }
 #endif

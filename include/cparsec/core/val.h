@@ -111,6 +111,9 @@
 #define Val_U32        Val_UINT32
 #define Val_U64        Val_UINT64
 
+/** \note use VAL_INIT(FILTER)(x) instead. */
+#define    FILTER_VAL_INIT( x )  { .type = FILTER   , .filter    = (x), .del = 0 }
+
 //// macros of various initializer of Val, whose value must be deallocated
 /** \note use VAL_INIT(D_ERROR)(x) instead. */
 #define   D_ERROR_VAL_INIT( x )  { .type = ERROR    , .str       = (x), .del = free }
@@ -129,6 +132,8 @@ extern "C" {
     typedef struct Val Val;
     /** \brief Type of a predicate function - a function pointer bool (*)(char) */
     typedef bool (*Predicate)( char );
+    /** \brief Type of a filter function - a function pointer Val (*)(Val) */
+    typedef Val (*Filter)( Val );
     /** \brief Type of a deletor function - a function pointer void (*)(void*) */
     typedef void (*Deletor)( void* );
 
@@ -161,6 +166,8 @@ extern "C" {
         U32 = UINT32,           ///< uint32_t u32 (synonym for UINT32)
         UINT64,                 ///< uint64_t u64
         U64 = UINT64,           ///< uint64_t u64 (synonym for UINT64)
+        /* filter function pointer */
+        FILTER,
     };
 
     struct Val {
@@ -186,12 +193,12 @@ extern "C" {
             uint16_t         u16;       ///< An uint16_t value for type of UINT16
             uint32_t         u32;       ///< An uint32_t value for type of UINT32
             uint64_t         u64;       ///< An uint64_t value for type of UINT64
+            /* filter function pointer */
+            Filter           filter;    ///< A Filter value for type of FILTER
         };
         /** \brief A deletor function of the value. NULL if the value does not need to be deleted. */
         Deletor del;
     };
-
-    extern void Parser_unref( struct ParserSt* );
 
     //// constructors
 
@@ -212,6 +219,7 @@ extern "C" {
     Val Val_UINT16( uint16_t u16 );
     Val Val_UINT32( uint32_t u32 );
     Val Val_UINT64( uint64_t u64 );
+    Val Val_FILTER( Filter filter );
     Val Val_D_ERROR ( const char* error );
     Val Val_D_PTR   ( void* ptr );
     Val Val_D_STRING( const char* str );
