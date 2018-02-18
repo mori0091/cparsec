@@ -152,7 +152,7 @@ extern "C" {
         INT8,                   ///< int8_t  i8
         I8 = INT8,              ///< int8_t  i8  (synonym for INT8)
         INT16,                  ///< int16_t i16
-        I16 = INT16,            ///< int16_t i16 (synonym for INT8)
+        I16 = INT16,            ///< int16_t i16 (synonym for INT16)
         INT32,                  ///< int32_t i32
         I32 = INT32,            ///< int32_t i32 (synonym for INT32)
         INT64,                  ///< int64_t i64
