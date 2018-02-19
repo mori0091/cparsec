@@ -89,8 +89,8 @@ extern "C" {
      * Parser if its reference count became zero.
      *
      * \param p   a parser
-     * \return    the parser `p` itself
-     * \sa Parser_unref()
+     *
+     * \sa Parser_ref()
      */
     void Parser_unref( Parser p );
 
