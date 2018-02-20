@@ -138,6 +138,17 @@ extern "C" {
      *               `strcmp( str, s ) == 0` was `true`.
      */
     Parser string1( const char* str );
+    /**
+     * \brief A primitive parser generator - one_of.
+     *
+     * one_of() creates a parser, which parses a `char ch` if ch is a
+     * member of the char array `chars`.
+     * 
+     * \param chars  expected characters
+     * \return       a parser, which parses a `char ch` if ch is a
+     *               member of the char array `chars`.
+     */
+    Parser one_of( const char* chars );
 
     //// primitive parser generators - unary operator
     /**
@@ -154,12 +165,12 @@ extern "C" {
     /**
      * \brief A primitive parser generator - many1.
      *
-     * many1() creates a parser, which applies the parser `x` one
-     * times or more.
+     * many1() creates a parser, which applies the parser `x` once or
+     * more.
      * 
      * \param x      a parser
-     * \return       a parser, which applies the parser `x` one times
-     *               or more.
+     * \return       a parser, which applies the parser `x` once or
+     *               more.
      */
     Parser many1( Parser x );
     /**
@@ -173,6 +184,18 @@ extern "C" {
      *               on error.
      */
     Parser tryp( Parser x );
+    /**
+     * \brief A primitive parser generator - optional.
+     *
+     * optional() creates a parser, which applies the parser `x` at
+     * most once. If `x` failed, rewinds then returns a null string ""
+     * instead of an error.
+     * 
+     * \param x      a parser
+     * \return       a parser, which applies the parser `x` at most
+     *               once.
+     */
+    Parser optional( Parser x );
 
     //// primitive parser generators - binary operator
     /**
