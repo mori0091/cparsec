@@ -3,9 +3,11 @@
 
 -include Project.mk
 
+ifneq ($(SRCS),)
 TARGET  ?= $(DEFAULT_TARGET)
+DEFAULT_TARGET      = $(BIN_DIR)/$(notdir $(CURDIR))
+endif
 
-DEFAULT_TARGET      = $(BIN_DIR)/$(notdir $(abspath .))
 DEFAULT_TEST_TARGET = $(TEST_LIB_DIR)/lib$(notdir $(abspath .)).a
 DEFAULT_CFLAGS = -MMD -MD -pedantic-errors -Wpedantic -Wall -Wextra -Winit-self -Wno-missing-field-initializers
 
@@ -46,16 +48,27 @@ CC  = gcc
 CXX = g++
 AR  = ar
 
-ifneq ($(SRCS),)
+# ----
+
 all: build test
-else
-all: test
+
+# ifneq ($(SRCS),)
+# all: build test
+# else
+# all: test
+# endif
+
+# ----
+_PROVIDE_MK = _provide.mk
+ifneq ($(REQUIRE),)
+PROJECT_DEPENDS = $(foreach i,$(REQUIRE),$(addprefix $(i)/,$(_PROVIDE_MK)))
+-include $(PROJECT_DEPENDS)
 endif
 
-build: $(TARGET)
+build:: $(TARGET)
 
-clean:
-	@rm -f $(OBJS) $(TARGET) $(DEPS)
+clean::
+	@rm -f $(OBJS) $(TARGET) $(DEPS) $(_PROVIDE_MK)
 	@rm -rf $(DST_BASE_DIR)
 
 show:
@@ -80,17 +93,17 @@ show:
 	$(info DEPS         = $(DEPS))
 	@echo
 
-test: $(TEST_RUNNER)
-	$(info [TEST]  Run     : $<)
+test:: $(TEST_RUNNER)
+	$(info [TEST]  Run     : $<	[$(notdir $(CURDIR))])
 	@$<
 
 $(TARGET_BIN): $(OBJS) $(LIBS)
-	$(info [CXXLD] Build   : $@)
+	$(info [CXXLD] Build   : $@	[$(notdir $(CURDIR))])
 	@mkdir -p $(dir $@)
 	@$(CXX) -o $@ $^ $(LDFLAGS) $(LDLIBS)
 
 $(TARGET_LIB) $(DEFAULT_TEST_TARGET): $(OBJS)
-	$(info [AR]    Build   : $@)
+	$(info [AR]    Build   : $@	[$(notdir $(CURDIR))])
 	@mkdir -p $(dir $@)
 	@$(AR) cr $@ $^
 
@@ -111,17 +124,30 @@ test.build: $(TEST_TARGET)
 		 INC_DIR="$(INC_DIR) thirdparty/catch2" \
 		 SRC_DIR="$(TEST_DIR)" \
 		 TARGET="$(TEST_RUNNER)" \
-		 -s \
+		 REQUIRE="" \
+		 -s --no-print-directory \
 		 build
 
 debug:
 	@$(MAKE) DST_DIR="$(DST_BASE_DIR)/debug" \
 		 DEFAULT_CFLAGS="$(DEFAULT_CFLAGS) -g -DDEBUG" \
-		 -s
+		 -s --no-print-directory
 
 release:
 	@$(MAKE) DST_DIR="$(DST_BASE_DIR)/release" \
 		 DEFAULT_CFLAGS="$(DEFAULT_CFLAGS) -O2" \
-		 -s
+		 -s --no-print-directory
 
 -include $(DEPS)
+
+# ----
+%/$(_PROVIDE_MK):
+	@$(MAKE) --no-print-directory -sC $(dir $@) $(notdir $@)
+
+$(_PROVIDE_MK):
+	@$(file > $@,$(foreach d,$(wildcard $(INC_DIR)),INCLUDES+=-I$(abspath $(d))))
+ifneq ($(TARGET_LIB),)
+	@$(file >>$@,LIBS+=$(addprefix $(CURDIR)/,$$(LIB_DIR)/$(notdir $(TARGET_LIB))))
+endif
+	@$(file >>$@,build clean test::)
+	@$(file >>$@,	@$$(MAKE) -C $(CURDIR) $$@)
