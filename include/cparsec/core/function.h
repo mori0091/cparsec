@@ -183,6 +183,7 @@ inline Fn Fn_bind1( Fn f, void*       x ) { return Fn_bind1_ptr(f,x); }
     _Generic((x)                                 \
              , Val         : Fn_bind1_v          \
              , char        : Fn_bind1_c          \
+             , int         : Fn_bind1_i          \
              , double      : Fn_bind1_d          \
              , const char* : Fn_bind1_str        \
              , void*       : Fn_bind1_ptr        \
@@ -192,6 +193,7 @@ inline Fn Fn_bind1( Fn f, void*       x ) { return Fn_bind1_ptr(f,x); }
     _Generic((x)                                 \
              , Val         : Fn_bind1_v          \
              , char        : Fn_bind1_c          \
+             , int         : Fn_bind1_i          \
              , double      : Fn_bind1_d          \
              , const char* : Fn_bind1_str        \
              , void*       : Fn_bind1_ptr        \
