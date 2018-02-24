@@ -43,6 +43,7 @@ static int Val_snprint( char* buf, size_t maxlen, const Val* x )
 }
 
 const Val Val_NONE = VAL_INIT(NONE);
+Val Val_VAL   ( Val x )                     { return x; }
 Val Val_ERROR ( const char* error )         { return (Val)VAL_INIT(ERROR)(error); }
 Val Val_CHAR  ( char c )                    { return (Val)VAL_INIT(CHAR)(c); }
 Val Val_INT   ( int i )                     { return (Val)VAL_INIT(INT)(i); }

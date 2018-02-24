@@ -203,6 +203,7 @@ extern "C" {
     //// constructors
 
     extern const Val Val_NONE;
+    Val Val_VAL( Val x );
     Val Val_ERROR ( const char* error );
     Val Val_CHAR  ( char c );
     Val Val_INT   ( int i );
@@ -254,6 +255,29 @@ extern "C" {
   
 #ifdef __cplusplus
 }
+#endif
+
+#ifdef __cplusplus
+// For C++ ; function overload
+inline Val val(Val         x) { return x; }
+inline Val val(char        x) { return VAL(CHAR)(x); }
+inline Val val(int         x) { return VAL(INT)(x); }
+inline Val val(double      x) { return VAL(DOUBLE)(x); }
+inline Val val(const char* x) { return VAL(STRING)(x); }
+inline Val val(void*       x) { return VAL(PTR)(x); }
+
+#else
+// For C11 ; function overload by the generic selection macro
+#define val(x)                                  \
+    _Generic((x)                                \
+             , Val         : Val_VAL            \
+             , char        : Val_CHAR           \
+             , int         : Val_INT            \
+             , double      : Val_DOUBLE         \
+             , const char* : Val_STRING         \
+             , void*       : Val_PTR            \
+             )(x)
+
 #endif
 
 #endif  /* CPARSEC_CORE_VAL_H */

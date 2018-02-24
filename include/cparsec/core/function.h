@@ -88,21 +88,15 @@ extern "C" {
      */
     Fn fn( FnFunc funcptr );
 
+    /**
+     * \brief Partial application - Creates a function object g where g = f(x)
+     * \param f   a functioin object
+     * \param x   a value to be bounded as the 1st argument of f
+     * \return    a functioin object g where g = f(x).
+     *
+     * \sa Fn_bind()
+     */
     Fn Fn_bind1_v  ( Fn f, Val x );
-
-    inline Fn Fn_bind1_c  ( Fn f, char        x ) { return Fn_bind1_v(f,VAL(CHAR)(x));   }
-    inline Fn Fn_bind1_i  ( Fn f, int         x ) { return Fn_bind1_v(f,VAL(INT)(x));    }
-    inline Fn Fn_bind1_d  ( Fn f, double      x ) { return Fn_bind1_v(f,VAL(DOUBLE)(x)); }
-    inline Fn Fn_bind1_str( Fn f, const char* x ) { return Fn_bind1_v(f,VAL(STRING)(x)); }
-    inline Fn Fn_bind1_ptr( Fn f, void*       x ) { return Fn_bind1_v(f,VAL(PTR)(x));    }
-    inline Fn Fn_bind1_i8 ( Fn f, int8_t      x ) { return Fn_bind1_v(f,VAL(INT8)(x));   }
-    inline Fn Fn_bind1_i16( Fn f, int16_t     x ) { return Fn_bind1_v(f,VAL(INT16)(x));  }
-    inline Fn Fn_bind1_i32( Fn f, int32_t     x ) { return Fn_bind1_v(f,VAL(INT32)(x));  }
-    inline Fn Fn_bind1_i64( Fn f, int64_t     x ) { return Fn_bind1_v(f,VAL(INT64)(x));  }
-    inline Fn Fn_bind1_u8 ( Fn f, uint8_t     x ) { return Fn_bind1_v(f,VAL(UINT8)(x));  }
-    inline Fn Fn_bind1_u16( Fn f, uint16_t    x ) { return Fn_bind1_v(f,VAL(UINT16)(x)); }
-    inline Fn Fn_bind1_u32( Fn f, uint32_t    x ) { return Fn_bind1_v(f,VAL(UINT32)(x)); }
-    inline Fn Fn_bind1_u64( Fn f, uint64_t    x ) { return Fn_bind1_v(f,VAL(UINT64)(x)); }
 
     /**
      * \brief Evaluates a functioin object with its bounded arguments.
@@ -154,59 +148,39 @@ extern "C" {
 
 #ifdef __cplusplus
 // For C++, overloads Fn_bind1(f,x)
-inline Fn Fn_bind1( Fn f, Val         x ) { return Fn_bind1_v(f,x);   }
-inline Fn Fn_bind1( Fn f, char        x ) { return Fn_bind1_c(f,x);   }
-inline Fn Fn_bind1( Fn f, int         x ) { return Fn_bind1_i(f,x);   }
-inline Fn Fn_bind1( Fn f, double      x ) { return Fn_bind1_d(f,x);   }
-inline Fn Fn_bind1( Fn f, const char* x ) { return Fn_bind1_str(f,x); }
-inline Fn Fn_bind1( Fn f, void*       x ) { return Fn_bind1_ptr(f,x); }
-// inline Fn Fn_bind1( Fn f, int8_t      x ) { return Fn_bind1_i8(f,x);  }
-// inline Fn Fn_bind1( Fn f, int16_t     x ) { return Fn_bind1_i16(f,x); }
-// inline Fn Fn_bind1( Fn f, int32_t     x ) { return Fn_bind1_i32(f,x); }
-// inline Fn Fn_bind1( Fn f, int64_t     x ) { return Fn_bind1_i64(f,x); }
-// inline Fn Fn_bind1( Fn f, uint8_t     x ) { return Fn_bind1_u8(f,x);  }
-// inline Fn Fn_bind1( Fn f, uint16_t    x ) { return Fn_bind1_u16(f,x); }
-// inline Fn Fn_bind1( Fn f, uint32_t    x ) { return Fn_bind1_u32(f,x); }
-// inline Fn Fn_bind1( Fn f, uint64_t    x ) { return Fn_bind1_u64(f,x); }
-#else
-// For C11, use _Generic() generic selection macro
 /**
  * \brief Partial application - Creates a function object g where g = f(x)
+ *
  * \param f   a functioin object
  * \param x   a value to be bounded as the 1st argument of f
  * \return    a functioin object g where g = f(x).
  *
+ * \note The type of x must be one of `Val`, `char`, `int`, `double`,
+ *       `const char*`, or `void*`.
+ *
  * \sa Fn_bind()
+ * \sa Fn_bind1_v()
  */
-#if 1
-#define Fn_bind1(f,x)                            \
-    _Generic((x)                                 \
-             , Val         : Fn_bind1_v          \
-             , char        : Fn_bind1_c          \
-             , int         : Fn_bind1_i          \
-             , double      : Fn_bind1_d          \
-             , const char* : Fn_bind1_str        \
-             , void*       : Fn_bind1_ptr        \
-             )(f,x)
+template <typename T>
+Fn Fn_bind1( Fn f, T x ) { return Fn_bind1_v(f,val(x)); }
+
 #else
-#define Fn_bind1(f,x)                            \
-    _Generic((x)                                 \
-             , Val         : Fn_bind1_v          \
-             , char        : Fn_bind1_c          \
-             , int         : Fn_bind1_i          \
-             , double      : Fn_bind1_d          \
-             , const char* : Fn_bind1_str        \
-             , void*       : Fn_bind1_ptr        \
-             , int8_t      : Fn_bind1_i8         \
-             , int16_t     : Fn_bind1_i16        \
-             , int32_t     : Fn_bind1_i32        \
-             , int64_t     : Fn_bind1_i64        \
-             , uint8_t     : Fn_bind1_u8         \
-             , uint16_t    : Fn_bind1_u16        \
-             , uint32_t    : Fn_bind1_u32        \
-             , uint64_t    : Fn_bind1_u64        \
-             )(f,x)
-#endif
+// For C11, use _Generic() generic selection macro
+/**
+ * \brief Partial application - Creates a function object g where g = f(x)
+ *
+ * \param f   a functioin object
+ * \param x   a value to be bounded as the 1st argument of f
+ * \return    a functioin object g where g = f(x).
+ *
+ * \note The type of x must be one of `Val`, `char`, `int`, `double`,
+ *       `const char*`, or `void*`.
+ *
+ * \sa Fn_bind()
+ * \sa Fn_bind1_v()
+ */
+#define Fn_bind1(f,x)    Fn_bind1_v(f,val(x))
+
 #endif
 
 //------
