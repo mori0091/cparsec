@@ -5,40 +5,40 @@
 ### PARSER and PARSER COMBNATORS
 
 - Functions to parse a string
- - Val parse(Parser, const char*)
- - void parse_test(Parser, const char*)
+    - Val parse(Parser, const char*)
+    - void parse_test(Parser, const char*)
 
 - Pre-instantiated primitive parsers
- - const Parser any_char
- - const Parser digit
- - const Parser lower
- - const Parser upper
- - const Parser alpha
- - const Parser alnum
- - const Parser letter
- - const Parser number
+    - const Parser any_char
+    - const Parser digit
+    - const Parser lower
+    - const Parser upper
+    - const Parser alpha
+    - const Parser alnum
+    - const Parser letter
+    - const Parser number
 
 - Primitive parser generators
- - Parser char1(char)
- - Parser string1(const char*)
- - Parser satisfy(Predicate)
- - Parser one_of(const char*)
+    - Parser char1(char)
+    - Parser string1(const char*)
+    - Parser satisfy(Predicate)
+    - Parser one_of(const char*)
 
 - Unary operator parser combinators
- - Parser many(Parser)
- - Parser many1(Parser)
- - Parser tryp(Parser)
- - Parser optional(Parser)
+    - Parser many(Parser)
+    - Parser many1(Parser)
+    - Parser tryp(Parser)
+    - Parser optional(Parser)
 
 - Binary operator parser combinators
- - Parser seq(Parser,Parser)
- - Parser either(Parser,Parser)
- - Parser first(Parser,Parser)
- - Parser second(Parser,Parser)
+    - Parser seq(Parser,Parser)
+    - Parser either(Parser,Parser)
+    - Parser first(Parser,Parser)
+    - Parser second(Parser,Parser)
 
 - Other parser combinators
- - Parser rep(int,Parser)
- - Parser apply(Filter,Parser)
+    - Parser rep(int,Parser)
+    - Parser apply(Filter,Parser)
 
 ### FUNCTION OBJECTS - Currying and Partial Application
 
@@ -65,23 +65,23 @@
       - Fn9 fn9(Fp9) for nine arguments ; \sa Fn_apply()
 
 - Function objects
-  - Fn
-    : A function object which takes zero or more arguments.
-  - Fn1
-    : A function object which takes one argument.
-  - Fn2
-    : A function object which takes two arguments.
-  - Fn3
-    : A function object which takes three arguments.
-  - Fn4
-    : A function object which takes four arguments.
-  - Fn5
-    : A function object which takes five arguments.
-  - Fn6
-    : A function object which takes six arguments.
-  - Fn7
-    : A function object which takes seven arguments.
-  - Fn8
-    : A function object which takes eight arguments.
-  - Fn9
-    : A function object which takes nine arguments.
+    - Fn
+      : A function object which takes zero or more arguments.
+    - Fn1
+      : A function object which takes one argument.
+    - Fn2
+      : A function object which takes two arguments.
+    - Fn3
+      : A function object which takes three arguments.
+    - Fn4
+      : A function object which takes four arguments.
+    - Fn5
+      : A function object which takes five arguments.
+    - Fn6
+      : A function object which takes six arguments.
+    - Fn7
+      : A function object which takes seven arguments.
+    - Fn8
+      : A function object which takes eight arguments.
+    - Fn9
+      : A function object which takes nine arguments.
