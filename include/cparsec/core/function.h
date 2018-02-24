@@ -133,10 +133,10 @@ extern "C" {
 /**
  * \brief Partial application - Creates a function object g where g = f(...)
  *
- * \note The 1st argument f must be a Fn type. (must not be NULL)
- * \note The rest argument must be a Val type.
+ * \note The type of f must be Fn. (must not be NULL)
+ * \note The all rest arguments must be a Val type.
  * \note Fn_bind(f,x,y,z) is equivalent to
- *       Fn_bind11(Fn_bind11(Fn_bind11(f,x),y),z)
+ *       Fn_bind1(Fn_bind1(Fn_bind1(f,x),y),z)
  *
  * \param f    a functioin object (Fn)
  * \param ...  one or more Val objects to be bounded as the arguments of f.
