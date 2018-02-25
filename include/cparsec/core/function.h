@@ -25,6 +25,20 @@ extern "C" {
      */
     typedef struct FnSt* Fn;
 
+    typedef struct FnSt FnSt;
+
+    struct FnSt {
+        int ref_cnt;                ///< reference counter
+        int depth;                  ///< the number of bounded arguments
+        union {
+            FnFunc funcptr;         ///< a function pointer
+            struct {
+                Fn  f;              ///< a function object that x to be applied
+                Val x;              ///< an argument to be applied to f
+            } fx;
+        };
+    };
+
     /**
      * \brief Returns the number of function objects living.
      *

@@ -6,7 +6,6 @@
 #define CPARSEC_PRIMITIVE_SINGLETON_H
 
 #include "cparsec.h"
-#include "cparsec/primitive/satisfy.h"
 
 #include <stdbool.h>
 

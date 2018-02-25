@@ -54,6 +54,8 @@
 #define      NONE_VAL_INIT       { .type = NONE     , .ptr       = 0  , .del = 0 }
 /** \note use VAL_INIT(ERROR)(x) instead. */
 #define     ERROR_VAL_INIT( x )  { .type = ERROR    , .error     = (x), .del = 0 }
+/** \note use VAL_INIT(BOOL) instead. */
+#define      BOOL_VAL_INIT( x )  { .type = BOOL     , .b         = (x), .del = 0 }
 /** \note use VAL_INIT(CHAR)(x) instead. */
 #define      CHAR_VAL_INIT( x )  { .type = CHAR     , .c         = (x), .del = 0 }
 /** \note use VAL_INIT(INT)(x) instead. */
@@ -141,6 +143,7 @@ extern "C" {
     enum ValType {
         NONE = 0,               ///< (none)
         ERROR,                  ///< const char* error
+        BOOL,                   ///< bool b
         CHAR,                   ///< char c
         INT,                    ///< int i
         DOUBLE,                 ///< double d
@@ -176,6 +179,7 @@ extern "C" {
         /** \brief the value of this Val */
         union {
             const char*      error;     ///< An error message for type of ERROR
+            bool             b;         ///< A bool value for type of BOOL
             char             c;         ///< A char value for type of CHAR
             int              i;         ///< An int value for type of INT
             double           d;         ///< A double value for type of DOUBLE
@@ -205,6 +209,7 @@ extern "C" {
     extern const Val Val_NONE;
     Val Val_VAL( Val x );
     Val Val_ERROR ( const char* error );
+    Val Val_BOOL  ( bool b );
     Val Val_CHAR  ( char c );
     Val Val_INT   ( int i );
     Val Val_DOUBLE( double d  );
@@ -261,6 +266,7 @@ extern "C" {
 #ifdef __cplusplus
 // For C++ ; function overload
 inline Val val(Val         x) { return x; }
+inline Val val(bool        x) { return VAL(BOOL)(x); }
 inline Val val(char        x) { return VAL(CHAR)(x); }
 inline Val val(int         x) { return VAL(INT)(x); }
 inline Val val(double      x) { return VAL(DOUBLE)(x); }
@@ -272,6 +278,7 @@ inline Val val(void*       x) { return VAL(PTR)(x); }
 #define val(x)                                  \
     _Generic((x)                                \
              , Val         : Val_VAL            \
+             , bool        : Val_BOOL           \
              , char        : Val_CHAR           \
              , int         : Val_INT            \
              , double      : Val_DOUBLE         \

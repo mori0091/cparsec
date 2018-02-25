@@ -7,25 +7,17 @@
 
 #include "cparsec.h"
 #include "cparsec/core/source.h"
-
-#define PARSER_FUNC_NAME( name )    PARSER_FUNC_NAME_I( name )
-#define PARSER_FUNC_NAME_I( name )  name ## _run
-#define DECL_PARSER_FUNC( name )    Val PARSER_FUNC_NAME(name)( const Parser self, Source* psrc )
-#define RUN_PARSER( p )             Parser_eval( p, psrc )
+#include "cparsec/core/curry.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-    typedef Val (*ParserFunc)( const Parser, Source* );
-
     typedef struct ParserSt ParserSt;
 
     struct ParserSt {
         int ref_cnt;
-        Val arg1;
-        Val arg2;
-        ParserFunc run;
+        Fn1 run;
     };
 
     // int Parser_live_count( void );

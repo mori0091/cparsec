@@ -1,12 +1,30 @@
 /* -*- mode: c++ ; coding: utf-8-unix -*- */
 
-#include "cparsec/primitive/select.h"
+#include "cparsec/core/parser.h"
 
-DEF_PARSER__BINARY_OP( first )
+static Val first_run( Val x_, Val y_, Val psrc_ );
+
+Parser first( Parser x, Parser y )
 {
-    Val x = RUN_PARSER( self->arg1.parser );
+    Parser p = Parser_new();
+    if ( p ) {
+        p->ref_cnt = 0;
+        Val x_ = VAL(D_PARSER)(x);
+        Val y_ = VAL(D_PARSER)(y);
+        Fn1 run = Fn_apply( first_run, x_, y_ );
+        Parser_ref( x );
+        Parser_ref( y );
+        p->run = run;
+    }
+    return p;
+}
+
+static Val first_run( Val x_, Val y_, Val psrc_ )
+{
+    Source* psrc = (Source*)psrc_.ptr;
+    Val x = Parser_eval( x_.parser, psrc );
     if ( x.type == ERROR ) return x;
-    Val y = RUN_PARSER( self->arg2.parser );
+    Val y = Parser_eval( y_.parser, psrc );
     if ( y.type == ERROR ) {
         Val_del( &x );
         return y;
@@ -15,10 +33,28 @@ DEF_PARSER__BINARY_OP( first )
     return x;
 }
 
-DEF_PARSER__BINARY_OP( second )
+static Val second_run( Val x_, Val y_, Val psrc_ );
+
+Parser second( Parser x, Parser y )
 {
-    Val x = RUN_PARSER( self->arg1.parser );
+    Parser p = Parser_new();
+    if ( p ) {
+        p->ref_cnt = 0;
+        Val x_ = VAL(D_PARSER)(x);
+        Val y_ = VAL(D_PARSER)(y);
+        Fn1 run = Fn_apply( second_run, x_, y_ );
+        Parser_ref( x );
+        Parser_ref( y );
+        p->run = run;
+    }
+    return p;
+}
+
+static Val second_run( Val x_, Val y_, Val psrc_ )
+{
+    Source* psrc = (Source*)psrc_.ptr;
+    Val x = Parser_eval( x_.parser, psrc );
     if ( x.type == ERROR ) return x;
     Val_del( &x );
-    return RUN_PARSER( self->arg2.parser );
+    return Parser_eval( y_.parser, psrc );
 }

@@ -1,18 +1,32 @@
 /* -*- mode: c++ ; coding: utf-8-unix -*- */
 
-#include "cparsec/arithmetic/number.h"
+#include "cparsec/core/parser.h"
 
-#define UNUSED_VARIABLE(x)    (void)(x)
-
-static ParserSt number_ = NO_ARGS_ST_INIT( number );
-const Parser number = &number_;
-
-DEF_PARSER__NO_ARGS( number )
+static Val number_run( Val psrc_ )
 {
-    UNUSED_VARIABLE( self );
-    Val x = RUN_PARSER( many1( digit ) );
+    Source* psrc = (Source*)psrc_.ptr;
+    Val x = Parser_eval( many1( digit ), psrc );
     if ( x.type == ERROR ) return x;
     Val ret = VAL(INT)( atoi( x.str ) );
     Val_del( &x );
     return ret;
 }
+
+static Val number_fp0( int n, const Val* x[] )
+{
+    assert( n == 1 );
+    return number_run( *x[0] );
+}
+
+static FnSt number_fn0 = {
+    .ref_cnt = -1,
+    .depth   = 0,
+    .funcptr = number_fp0,
+};
+
+static ParserSt number_ = {
+    .ref_cnt = -1,
+    .run     = { &number_fn0 },
+};
+
+const Parser number = &number_;

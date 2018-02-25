@@ -1,11 +1,26 @@
 /* -*- mode: c++ ; coding: utf-8-unix -*- */
 
-#include "cparsec/primitive/optional.h"
+#include "cparsec/core/parser.h"
 
-// \todo error message should be "expected <X> but was <y>"
-DEF_PARSER__UNARY_OP( optional )
+static Val optional_run( Val x_, Val psrc_ );
+
+Parser optional( Parser x )
 {
-    Val ret = RUN_PARSER( tryp( self->arg1.parser ) );
+    Parser p = Parser_new();
+    if ( p ) {
+        p->ref_cnt = 0;
+        Val x_ = VAL(D_PARSER)(x);
+        Fn1 run = Fn_apply( optional_run, x_ );
+        Parser_ref( x );
+        p->run = run;
+    }
+    return p;
+}
+
+static Val optional_run( Val x_, Val psrc_ )
+{
+    Source* psrc = (Source*)psrc_.ptr;
+    Val ret = Parser_eval( tryp( x_.parser ), psrc );
     if ( ret.type != ERROR ) {
         return ret;
     }

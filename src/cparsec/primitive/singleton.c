@@ -1,7 +1,9 @@
 /* -*- mode: c++ ; coding: utf-8-unix -*- */
 
 #include "cparsec/primitive/singleton.h"
-#include "cparsec/primitive/satisfy.h"
+#include "cparsec/core/parser.h"
+// #include "cparsec/core/function.h"
+// #include "cparsec/core/curry.h"
 
 #define UNUSED_VARIABLE(x)    (void)(x)
 
@@ -13,18 +15,37 @@ bool is_alpha   ( char c ) { return is_lower(c) || is_upper(c); }
 bool is_alnum   ( char c ) { return is_alpha(c) || is_digit(c); }
 bool is_letter  ( char c ) { return is_alpha(c) || c == '_'; }
 
-static ParserSt any_char_ = PREDICATE_ST_INIT( satisfy, is_any_char );
-static ParserSt digit_    = PREDICATE_ST_INIT( satisfy, is_digit );
-static ParserSt lower_    = PREDICATE_ST_INIT( satisfy, is_lower );
-static ParserSt upper_    = PREDICATE_ST_INIT( satisfy, is_upper );
-static ParserSt alpha_    = PREDICATE_ST_INIT( satisfy, is_alpha );
-static ParserSt alnum_    = PREDICATE_ST_INIT( satisfy, is_alnum );
-static ParserSt letter_   = PREDICATE_ST_INIT( satisfy, is_letter );
+extern Val satisfy_run( Val pred_, Val psrc_ );
 
-const Parser any_char = &any_char_;
-const Parser digit    = &digit_;
-const Parser lower    = &lower_;
-const Parser upper    = &upper_;
-const Parser alpha    = &alpha_;
-const Parser alnum    = &alnum_;
-const Parser letter   = &letter_;
+static Val satisfy_run_delegate( int n, const Val* args[] )
+{
+    assert( n == 2 );
+    return satisfy_run( *args[0], *args[1] );
+}
+
+static FnSt satisfy_fn0 = {
+    .ref_cnt = -1,
+    .depth   = 0,
+    .funcptr = satisfy_run_delegate,
+};
+
+#define DEF_PREDICATE_PARSER( name, pred )              \
+    static FnSt pred ## _fn = {                         \
+        .ref_cnt = -1,                                  \
+        .depth   = 1,                                   \
+        .fx.f    = &satisfy_fn0,                        \
+        .fx.x    = VAL_INIT(PREDICATE)(pred),           \
+    };                                                  \
+    static ParserSt name ## _ = {                       \
+        .ref_cnt = -1,                                  \
+        .run     = { &(pred ## _fn) },                  \
+    };                                                  \
+    const Parser name = &name ## _
+
+DEF_PREDICATE_PARSER( any_char, is_any_char );
+DEF_PREDICATE_PARSER( digit   , is_digit    );
+DEF_PREDICATE_PARSER( lower   , is_lower    );
+DEF_PREDICATE_PARSER( upper   , is_upper    );
+DEF_PREDICATE_PARSER( alpha   , is_alpha    );
+DEF_PREDICATE_PARSER( alnum   , is_alnum    );
+DEF_PREDICATE_PARSER( letter  , is_letter   );

@@ -13,7 +13,7 @@ Val parse( const Parser x, const char* str )
     Val ret = VAL(ERROR)( "null text" );
     if ( str ) {
         Source s = Source_init( str );
-        ret = x->run( x, &s );
+        ret = Fn_apply( x->run, val((void*)&s) );
     }
     Parser_unref( x );
     return ret;

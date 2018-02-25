@@ -1,11 +1,25 @@
 /* -*- mode: c++ ; coding: utf-8-unix -*- */
 
-#include "cparsec/primitive/char1.h"
+#include "cparsec/core/parser.h"
 
-// \todo error message should be "expected <X> but was <y>"
-DEF_PARSER__CHAR( char1 )
+static Val char1_run( Val c_, Val psrc_ );
+
+Parser char1( char c )
 {
-    char expect = self->arg1.c;
+    Parser p = Parser_new();
+    if ( p ) {
+        p->ref_cnt = 0;
+        Val c_ = VAL(CHAR)(c);
+        Fn1 run = Fn_apply( char1_run, c_ );
+        p->run = run;
+    }
+    return p;
+}
+
+static Val char1_run( Val c_, Val psrc_ )
+{
+    Source* psrc = (Source*)psrc_.ptr;
+    char expect = c_.c;
     Val ret = Source_peek( psrc );
     if ( ret.type == ERROR ) return ret;
     if ( expect != ret.c ) return Source_error( psrc, "not satisfy" );
