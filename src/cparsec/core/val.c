@@ -37,7 +37,7 @@ static int Val_snprint( char* buf, size_t maxlen, const Val* x )
     case UINT16:         return snprintf( buf, maxlen, "%" PRIu16, x->u16 );
     case UINT32:         return snprintf( buf, maxlen, "%" PRIu32, x->u32 );
     case UINT64:         return snprintf( buf, maxlen, "%" PRIu64, x->u64 );
-    case FILTER:         return snprintf( buf, maxlen, "<{\?:Filter}>" );
+    case FN:             return snprintf( buf, maxlen, "<{%p:Fn}>", (void*)x->fn );
     default:             return snprintf( buf, maxlen, "<{UNKNOWN}>" );
     }
 }
@@ -60,11 +60,12 @@ Val Val_UINT8 ( uint8_t u8 )                { return (Val)VAL_INIT(UINT8)(u8); }
 Val Val_UINT16( uint16_t u16 )              { return (Val)VAL_INIT(UINT16)(u16); }
 Val Val_UINT32( uint32_t u32 )              { return (Val)VAL_INIT(UINT32)(u32); }
 Val Val_UINT64( uint64_t u64 )              { return (Val)VAL_INIT(UINT64)(u64); }
-Val Val_FILTER( Filter filter )             { return (Val)VAL_INIT(FILTER)(filter); }
+Val Val_FN    ( struct FnSt* fn )           { return (Val)VAL_INIT(FN)(fn); }
 Val Val_D_ERROR ( const char* error )       { return (Val)VAL_INIT(D_ERROR)(error); }
 Val Val_D_PTR   ( void* ptr )               { return (Val)VAL_INIT(D_PTR)(ptr); }
 Val Val_D_STRING( const char* str )         { return (Val)VAL_INIT(D_STRING)(str); }
 Val Val_D_PARSER( struct ParserSt* parser ) { return (Val)VAL_INIT(D_PARSER)(parser); }
+Val Val_D_FN    ( struct FnSt* fn )         { return (Val)VAL_INIT(D_FN)(fn); }
 
 void Val_del( Val* x )
 {
