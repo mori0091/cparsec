@@ -5,3 +5,4 @@
 *.exe
 build
 doxygen
+_provide.mk

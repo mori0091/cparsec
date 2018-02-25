@@ -3,11 +3,6 @@
 
 -include Project.mk
 
-ifneq ($(SRCS),)
-TARGET  ?= $(DEFAULT_TARGET)
-DEFAULT_TARGET      = $(BIN_DIR)/$(notdir $(CURDIR))
-endif
-
 DEFAULT_TEST_TARGET = $(TEST_LIB_DIR)/lib$(notdir $(abspath .)).a
 DEFAULT_CFLAGS = -MMD -MD -pedantic-errors -Wpedantic -Wall -Wextra -Winit-self -Wno-missing-field-initializers
 
@@ -32,6 +27,11 @@ CXXFLAGS += $(DEFAULT_CFLAGS)
 
 INCLUDES  = $(foreach d,$(wildcard $(INC_DIR) $(SRC_DIR)),-I$(d))
 CPPFLAGS += $(INCLUDES)
+
+ifneq ($(SRCS),)
+DEFAULT_TARGET      = $(BIN_DIR)/$(notdir $(CURDIR))
+TARGET  ?= $(DEFAULT_TARGET)
+endif
 
 TARGET_LIB ?= $(filter %.a,$(TARGET))
 TARGET_BIN ?= $(filter-out %.a,$(TARGET))
@@ -88,9 +88,10 @@ show:
 	$(info TEST_TARGET  = $(TEST_TARGET))
 	$(info TEST_RUNNER  = $(TEST_RUNNER))
 	$(info INCLUDES     = $(INCLUDES))
-	$(info SRCS         = $(SRCS))
-	$(info OBJS         = $(OBJS))
-	$(info DEPS         = $(DEPS))
+	$(info LIBS         = $(LIBS))
+	$(info LDFLAGS      = $(LDFLAGS))
+	$(info LDLIBS       = $(LDLIBS))
+	$(info REQUIRE      = $(REQUIRE))
 	@echo
 
 test:: $(TEST_RUNNER)
@@ -146,8 +147,12 @@ release:
 
 $(_PROVIDE_MK):
 	@$(file > $@,$(foreach d,$(wildcard $(INC_DIR)),INCLUDES+=-I$(abspath $(d))))
+	@$(file >>$@,INCLUDES+=$(filter-out $(foreach d,$(wildcard $(INC_DIR) $(SRC_DIR)),-I$(d)),$(INCLUDES)))
 ifneq ($(TARGET_LIB),)
 	@$(file >>$@,LIBS+=$(addprefix $(CURDIR)/,$$(LIB_DIR)/$(notdir $(TARGET_LIB))))
+	@$(file >>$@,LIBS+=$(LIBS))
+	@$(file >>$@,LDLIBS+=$(LDLIBS))
+	@$(file >>$@,LDFLAGS+=$(LDFLAGS))
 endif
 	@$(file >>$@,build clean test::)
 	@$(file >>$@,	@$$(MAKE) -C $(CURDIR) $$@)
