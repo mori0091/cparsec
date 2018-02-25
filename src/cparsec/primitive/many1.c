@@ -1,6 +1,6 @@
 /* -*- mode: c++ ; coding: utf-8-unix -*- */
 
-#include "cparsec/primitive/many1.h"
+#include "cparsec.h"
 
 Parser many1( Parser x )
 {
