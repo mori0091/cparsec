@@ -27,9 +27,9 @@ SCENARIO( "'apply' parser combinator", "[cparsec][apply]" ) {
         // Parser a = Parser_ref( char1('a') );
         Parser a = char1('a');
         REQUIRE( 1 == Parser_live_count() );
-        WHEN( "parse( apply(inc,a), \"\")" ) {
+        WHEN( "parse( apply(fn1(inc),a), \"\")" ) {
             const char* input  = "";
-            Val ret = parse( apply(inc,a), input );
+            Val ret = parse( apply(fn1(inc),a), input );
             REQUIRE( 0 == Parser_live_count() );
             THEN( "results an error" ) {
                 REQUIRE( ret.type == ERROR );
@@ -37,10 +37,10 @@ SCENARIO( "'apply' parser combinator", "[cparsec][apply]" ) {
             }
             Val_del( &ret );
         }
-        WHEN( "parse( apply(inc,a), \"a\")" ) {
+        WHEN( "parse( apply(fn1(inc),a), \"a\")" ) {
             const char* input  = "a";
             char expect = 'b';
-            Val ret = parse( apply(inc,a), input );
+            Val ret = parse( apply(fn1(inc),a), input );
             REQUIRE( 0 == Parser_live_count() );
             THEN( "results a char 'b'" ) {
                 REQUIRE( ret.type == CHAR );
@@ -48,9 +48,9 @@ SCENARIO( "'apply' parser combinator", "[cparsec][apply]" ) {
             }
             Val_del( &ret );
         }
-        WHEN( "parse( apply(inc,a), \"b\")" ) {
+        WHEN( "parse( apply(fn1(inc),a), \"b\")" ) {
             const char* input  = "b";
-            Val ret = parse( apply(inc,a), input );
+            Val ret = parse( apply(fn1(inc),a), input );
             REQUIRE( 0 == Parser_live_count() );
             THEN( "results an error" ) {
                 REQUIRE( ret.type == ERROR );
@@ -62,9 +62,9 @@ SCENARIO( "'apply' parser combinator", "[cparsec][apply]" ) {
     }
     GIVEN( "Parser any_char" ) {
         REQUIRE( 0 == Parser_live_count() );
-        WHEN( "parse( apply(inc,any_char), \"\")" ) {
+        WHEN( "parse( apply(fn1(inc),any_char), \"\")" ) {
             const char* input  = "";
-            Val ret = parse( apply(inc,any_char), input );
+            Val ret = parse( apply(fn1(inc),any_char), input );
             REQUIRE( 0 == Parser_live_count() );
             THEN( "results an error" ) {
                 REQUIRE( ret.type == ERROR );
@@ -72,10 +72,10 @@ SCENARIO( "'apply' parser combinator", "[cparsec][apply]" ) {
             }
             Val_del( &ret );
         }
-        WHEN( "parse( apply(inc,any_char), \"a\")" ) {
+        WHEN( "parse( apply(fn1(inc),any_char), \"a\")" ) {
             const char* input  = "a";
             char expect = 'b';
-            Val ret = parse( apply(inc,any_char), input );
+            Val ret = parse( apply(fn1(inc),any_char), input );
             REQUIRE( 0 == Parser_live_count() );
             THEN( "results a char 'b'" ) {
                 REQUIRE( ret.type == CHAR );
@@ -83,10 +83,10 @@ SCENARIO( "'apply' parser combinator", "[cparsec][apply]" ) {
             }
             Val_del( &ret );
         }
-        WHEN( "parse( apply(inc,any_char), \"b\")" ) {
+        WHEN( "parse( apply(fn1(inc),any_char), \"b\")" ) {
             const char* input  = "b";
             char expect = 'c';
-            Val ret = parse( apply(inc,any_char), input );
+            Val ret = parse( apply(fn1(inc),any_char), input );
             REQUIRE( 0 == Parser_live_count() );
             THEN( "results a char 'c'" ) {
                 REQUIRE( ret.type == CHAR );
@@ -98,9 +98,9 @@ SCENARIO( "'apply' parser combinator", "[cparsec][apply]" ) {
     }
     GIVEN( "Parser number" ) {
         REQUIRE( 0 == Parser_live_count() );
-        WHEN( "parse( apply(inc,number), \"\")" ) {
+        WHEN( "parse( apply(fn1(inc),number), \"\")" ) {
             const char* input  = "";
-            Val ret = parse( apply(inc,number), input );
+            Val ret = parse( apply(fn1(inc),number), input );
             REQUIRE( 0 == Parser_live_count() );
             THEN( "results an error" ) {
                 REQUIRE( ret.type == ERROR );
@@ -108,10 +108,10 @@ SCENARIO( "'apply' parser combinator", "[cparsec][apply]" ) {
             }
             Val_del( &ret );
         }
-        WHEN( "parse( apply(inc,number), \"1\")" ) {
+        WHEN( "parse( apply(fn1(inc),number), \"1\")" ) {
             const char* input  = "1";
             int expect = 2;
-            Val ret = parse( apply(inc,number), input );
+            Val ret = parse( apply(fn1(inc),number), input );
             REQUIRE( 0 == Parser_live_count() );
             THEN( "results a int 2" ) {
                 REQUIRE( ret.type == INT );
@@ -119,10 +119,10 @@ SCENARIO( "'apply' parser combinator", "[cparsec][apply]" ) {
             }
             Val_del( &ret );
         }
-        WHEN( "parse( apply(inc,number), \"100\")" ) {
+        WHEN( "parse( apply(fn1(inc),number), \"100\")" ) {
             const char* input  = "100";
             int expect = 101;
-            Val ret = parse( apply(inc,number), input );
+            Val ret = parse( apply(fn1(inc),number), input );
             REQUIRE( 0 == Parser_live_count() );
             THEN( "results a int 101" ) {
                 REQUIRE( ret.type == INT );
@@ -130,9 +130,9 @@ SCENARIO( "'apply' parser combinator", "[cparsec][apply]" ) {
             }
             Val_del( &ret );
         }
-        WHEN( "parse( apply(inc,number), \"-1\")" ) {
+        WHEN( "parse( apply(fn1(inc),number), \"-1\")" ) {
             const char* input  = "-1";
-            Val ret = parse( apply(inc,number), input );
+            Val ret = parse( apply(fn1(inc),number), input );
             REQUIRE( 0 == Parser_live_count() );
             THEN( "results an error" ) {
                 REQUIRE( ret.type == ERROR );
@@ -143,4 +143,5 @@ SCENARIO( "'apply' parser combinator", "[cparsec][apply]" ) {
         // Parser_unref( a );
     }
     REQUIRE( 0 == Parser_live_count() );
+    REQUIRE( 0 == Fn_live_count() );
 }

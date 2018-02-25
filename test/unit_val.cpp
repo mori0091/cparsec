@@ -166,21 +166,23 @@ SCENARIO( "Tests various type of Val", "[cparsec][val]" ) {
             }
             Val_del( &x );
         }
-        GIVEN( "Val x = VAL(FILTER)(a_filter)" ) {
-            Val x = VAL(FILTER)(a_filter);
-            REQUIRE( FILTER == x.type );
-            // REQUIRE( a_filter == x.filter );
-            Filter filter = a_filter;
-            REQUIRE( filter == x.filter );
+        GIVEN( "Val x = VAL(FN)(fn1(a_filter).f)" ) {
+            Fn f = fn1(a_filter).f;
+            Val x = VAL(D_FN)(Fn_ref(f));
+            REQUIRE( FN == x.type );
+            REQUIRE( f == x.fn );
             WHEN( "x = Val_concat( &nil, &x )" ) {
                 x = Val_concat( &nil, &x );
+                char p[32] = {0};
+                snprintf( p, sizeof(p), "<{%p:Fn}>", (void*)f );
                 THEN( "x's type is STRING" )
-                    AND_THEN( "x's value is \"<{\?:Filter}>\"" ) {
+                    AND_THEN( "x's value is \"" + p + "\"" ) {
                     REQUIRE( STRING == x.type );
-                    REQUIRE( std::string("<{\?:Filter}>") == x.str );
+                    REQUIRE( std::string(p) == x.str );
                 }
             }
             Val_del( &x );
+            REQUIRE( 0 == Fn_live_count() );
         }
         GIVEN( "Val x = VAL(INT8)(1)" ) {
             Val x = VAL(INT8)(1);

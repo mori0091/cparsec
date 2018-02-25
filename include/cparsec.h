@@ -8,6 +8,7 @@
 #include <assert.h>
 
 #include "cparsec/core/val.h"
+#include "cparsec/core/curry.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -276,12 +277,12 @@ extern "C" {
      * apply() creates a parser, which applies the parser `x` then
      * applies a filter `f` to the result of `x`.
      * 
-     * \param f      a filter function type of Var (*)(Var)
+     * \param f      a filter (Fn1 type function object)
      * \param x      a parser
      * \return       a parser, which applies the parser `x` then
      *               applies a filter `f` to the result of `x`.
      */
-    Parser apply( Filter f, Parser x );
+    Parser apply( Fn1 f, Parser x );
 
 #ifdef __cplusplus
 }
