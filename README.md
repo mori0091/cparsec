@@ -38,7 +38,7 @@
 
 - Other parser combinators
     - Parser rep(int,Parser)
-    - Parser apply(Filter,Parser)
+    - Parser apply(Fn1,Parser)
 
 ### FUNCTION OBJECTS - Currying and Partial Application
 
@@ -107,16 +107,26 @@ int main( int argc, char** argv )
     - Fn_eval(Fn f)
       : Evaluates a Fn type function object.
     - Creates a function object from a function pointer
-      - Fn  fn(FnFunc) for zero or more (variable length) arguments ; \sa Fn_bind(), Fn_eval()
-      - Fn1 fn1(Fp1) for one arguments ; \sa Fn_apply()
-      - Fn2 fn2(Fp2) for two arguments ; \sa Fn_apply()
-      - Fn3 fn3(Fp3) for three arguments ; \sa Fn_apply()
-      - Fn4 fn4(Fp4) for four arguments ; \sa Fn_apply()
-      - Fn5 fn5(Fp5) for five arguments ; \sa Fn_apply()
-      - Fn6 fn6(Fp6) for six arguments ; \sa Fn_apply()
-      - Fn7 fn7(Fp7) for seven arguments ; \sa Fn_apply()
-      - Fn8 fn8(Fp8) for eight arguments ; \sa Fn_apply()
-      - Fn9 fn9(Fp9) for nine arguments ; \sa Fn_apply()
+      - Fn  fn(FnFunc) for zero or more (variable length) arguments
+        : See also Fn_bind(), Fn_eval()
+      - Fn1 fn1(Fp1) for one arguments
+        :See also Fn_apply()
+      - Fn2 fn2(Fp2) for two arguments
+        :See also Fn_apply()
+      - Fn3 fn3(Fp3) for three arguments
+        : See also Fn_apply()
+      - Fn4 fn4(Fp4) for four arguments
+        : See also Fn_apply()
+      - Fn5 fn5(Fp5) for five arguments
+        : See also Fn_apply()
+      - Fn6 fn6(Fp6) for six arguments
+        : See also Fn_apply()
+      - Fn7 fn7(Fp7) for seven arguments
+        : See also Fn_apply()
+      - Fn8 fn8(Fp8) for eight arguments
+        : See also Fn_apply()
+      - Fn9 fn9(Fp9) for nine arguments
+        : See also Fn_apply()
 
 - Function objects
     - Fn
