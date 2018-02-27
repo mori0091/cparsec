@@ -1,9 +1,13 @@
 /* -*- mode: c++ ; coding: utf-8-unix -*- */
 
+#define __STDC_FORMAT_MACROS
+#include <inttypes.h>
 #include <string>
+#include <sstream>
 #include "catch.hpp"
 
 #include "cparsec.h"
+#include "cparsec/core/parser.h"
 #include "cparsec/primitive/singleton.h"
 
 static Val a_filter( Val x ) { return x; }
@@ -108,6 +112,29 @@ SCENARIO( "Tests various type of Val", "[cparsec][val]" ) {
             }
             Val_del( &x );
         }
+        GIVEN( "char a[16]" ) {
+            char a[16];
+            for ( int i = 0; i < 16; ++i ) {
+                std::stringstream ss;
+                ss << "Val x = VAL(PTR)(&a[" << i << "])";
+                GIVEN( ss.str() ) {
+                    Val x = VAL(PTR)(&a[i]);
+                    REQUIRE( PTR == x.type );
+                    REQUIRE( x.ptr );
+                    WHEN( "x = Val_concat( &nil, &x )" ) {
+                        char p[32] = {0};
+                        snprintf( p, sizeof(p), "<{%#0*" PRIxPTR ":void*}>", (int)(2*sizeof(void*)), (uintptr_t)x.ptr );
+                        x = Val_concat( &nil, &x );
+                        THEN( "x's type is STRING" )
+                            AND_THEN( "x's value is \"" + p + "\"" ) {
+                            REQUIRE( STRING == x.type );
+                            REQUIRE( std::string(p) == x.str );
+                        }
+                    }
+                    Val_del( &x );
+                }
+            }
+        }
         GIVEN( "Val x = VAL(STRING)(\"foo bar\")" ) {
             Val x = VAL(STRING)("foo bar");
             REQUIRE( STRING == x.type );
@@ -150,6 +177,29 @@ SCENARIO( "Tests various type of Val", "[cparsec][val]" ) {
             }
             Val_del( &x );
         }
+        GIVEN( "struct ParserSt a[16]" ) {
+            struct ParserSt parser[16];
+            for ( int i = 0; i < 16; ++i ) {
+                std::stringstream ss;
+                ss << "Val x = VAL(PARSER)(&parser[" << i << "])";
+                GIVEN( ss.str() ) {
+                    Val x = VAL(PARSER)(&parser[i]);
+                    REQUIRE( PARSER == x.type );
+                    REQUIRE( x.ptr );
+                    WHEN( "x = Val_concat( &nil, &x )" ) {
+                        char p[32] = {0};
+                        snprintf( p, sizeof(p), "<{%#0*" PRIxPTR ":Parser}>", (int)(2*sizeof(void*)), (uintptr_t)x.parser );
+                        x = Val_concat( &nil, &x );
+                        THEN( "x's type is STRING" )
+                            AND_THEN( "x's value is \"" + p + "\"" ) {
+                            REQUIRE( STRING == x.type );
+                            REQUIRE( std::string(p) == x.str );
+                        }
+                    }
+                    Val_del( &x );
+                }
+            }
+        }
         GIVEN( "Val x = VAL(PREDICATE)(is_digit)" ) {
             Val x = VAL(PREDICATE)(is_digit);
             REQUIRE( PREDICATE == x.type );
@@ -172,9 +222,9 @@ SCENARIO( "Tests various type of Val", "[cparsec][val]" ) {
             REQUIRE( FN == x.type );
             REQUIRE( f == x.fn );
             WHEN( "x = Val_concat( &nil, &x )" ) {
-                x = Val_concat( &nil, &x );
                 char p[32] = {0};
-                snprintf( p, sizeof(p), "<{%p:Fn}>", (void*)f );
+                snprintf( p, sizeof(p), "<{%#0*" PRIxPTR ":Fn}>", (int)(2*sizeof(void*)), (uintptr_t)f );
+                x = Val_concat( &nil, &x );
                 THEN( "x's type is STRING" )
                     AND_THEN( "x's value is \"" + p + "\"" ) {
                     REQUIRE( STRING == x.type );
@@ -183,6 +233,43 @@ SCENARIO( "Tests various type of Val", "[cparsec][val]" ) {
             }
             Val_del( &x );
             REQUIRE( 0 == Fn_live_count() );
+        }
+        GIVEN( "Val x = VAL(FN)(NULL)" ) {
+            Val x = VAL(FN)(NULL);
+            REQUIRE( FN == x.type );
+            REQUIRE( nullptr == x.fn );
+            WHEN( "x = Val_concat( &nil, &x )" ) {
+                x = Val_concat( &nil, &x );
+                THEN( "x's type is STRING" )
+                    AND_THEN( "x's value is \"<{null:Fn}>\"" ) {
+                    REQUIRE( STRING == x.type );
+                    REQUIRE( std::string("<{null:Fn}>") == x.str );
+                }
+            }
+            Val_del( &x );
+        }
+        GIVEN( "struct FnSt g[16]" ) {
+            struct FnSt g[16];
+            for ( int i = 0; i < 16; ++i ) {
+                std::stringstream ss;
+                ss << "Val x = VAL(FN)(&g[" << i << "])";
+                GIVEN( ss.str() ) {
+                    Val x = VAL(FN)(&g[i]);
+                    REQUIRE( FN == x.type );
+                    REQUIRE( x.fn );
+                    WHEN( "x = Val_concat( &nil, &x )" ) {
+                        char p[32] = {0};
+                        snprintf( p, sizeof(p), "<{%#0*" PRIxPTR ":Fn}>", (int)(2*sizeof(void*)), (uintptr_t)x.fn );
+                        x = Val_concat( &nil, &x );
+                        THEN( "x's type is STRING" )
+                            AND_THEN( "x's value is \"" + p + "\"" ) {
+                            REQUIRE( STRING == x.type );
+                            REQUIRE( std::string(p) == x.str );
+                        }
+                    }
+                    Val_del( &x );
+                }
+            }
         }
         GIVEN( "Val x = VAL(INT8)(1)" ) {
             Val x = VAL(INT8)(1);

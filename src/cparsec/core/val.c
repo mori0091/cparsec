@@ -21,13 +21,13 @@ static int Val_snprint( char* buf, size_t maxlen, const Val* x )
     case INT:            return snprintf( buf, maxlen, "%d", x->i );
     case DOUBLE:         return snprintf( buf, maxlen, "%f", x->d );
     case PTR:
-        if ( x->ptr )    return snprintf( buf, maxlen, "<{%p:void*}>", x->ptr );
+        if ( x->ptr )    return snprintf( buf, maxlen, "<{%#0*" PRIxPTR ":void*}>", (int)(2*sizeof(void*)), (uintptr_t)x->ptr );
         else             return snprintf( buf, maxlen, "<{null:void*}>" );
     case STRING:
         if ( x->str )    return snprintf( buf, maxlen, "%s", x->str );
         else             return snprintf( buf, maxlen, "<{null:const char*}>" );
     case PARSER:
-        if ( x->parser ) return snprintf( buf, maxlen, "<{%p:Parser}>", (void*)x->parser );
+        if ( x->parser ) return snprintf( buf, maxlen, "<{%#0*" PRIxPTR ":Parser}>", (int)(2*sizeof(void*)), (uintptr_t)x->parser );
         else             return snprintf( buf, maxlen, "<{null:Parser}>" );
     case PREDICATE:      return snprintf( buf, maxlen, "<{\?:Predicate}>" );
     case INT8:           return snprintf( buf, maxlen, "%" PRId8 , x->i8  );
@@ -38,7 +38,9 @@ static int Val_snprint( char* buf, size_t maxlen, const Val* x )
     case UINT16:         return snprintf( buf, maxlen, "%" PRIu16, x->u16 );
     case UINT32:         return snprintf( buf, maxlen, "%" PRIu32, x->u32 );
     case UINT64:         return snprintf( buf, maxlen, "%" PRIu64, x->u64 );
-    case FN:             return snprintf( buf, maxlen, "<{%p:Fn}>", (void*)x->fn );
+    case FN:
+        if ( x->fn )     return snprintf( buf, maxlen, "<{%#0*" PRIxPTR ":Fn}>", (int)(2*sizeof(void*)), (uintptr_t)x->fn );
+        else             return snprintf( buf, maxlen, "<{null:Fn}>" );
     default:             return snprintf( buf, maxlen, "<{UNKNOWN}>" );
     }
 }
