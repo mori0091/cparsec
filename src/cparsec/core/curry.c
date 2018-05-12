@@ -32,12 +32,18 @@ static Val Fp_run( int n, const Val* x[] )
     }
 }
 
+static FnSt fp_run_delegate = {
+    .ref_cnt = -1,
+    .depth   = 0,
+    .funcptr = Fp_run,
+};
+
 static Fn Fp_fn( union Fp g )
 {
     union Fp* p = malloc( sizeof(union Fp) );
     assert( p );
     *p = g;
-    return Fn_bind1_v( fn(Fp_run), VAL(D_PTR)(p) );
+    return Fn_bind1_v( &fp_run_delegate, VAL(D_PTR)(p) );
 }
 
 Fn1 fn1( Fp1 g ) { return (Fn1){ Fp_fn((union Fp){.fp1=g}) }; }
