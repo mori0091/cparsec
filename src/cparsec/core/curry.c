@@ -43,7 +43,6 @@ static Fn Fp_fn( union Fp g )
     union Fp* p = malloc( sizeof(union Fp) );
     assert( p );
     *p = g;
-    // return Fn_bind1_v( fn(Fp_run), VAL(D_PTR)(p) );
     return Fn_bind1_v( &fp_run_delegate, VAL(D_PTR)(p) );
 }
 
