@@ -2,13 +2,13 @@ version: 2
 jobs:
   build:
     docker:
-      - image: ubuntu:18.04
+      - image: buildpack-deps:18.04
     steps:
       - checkout
       - run: make -s build
   test:
     docker:
-      - image: ubuntu:18.04
+      - image: buildpack-deps:18.04
     steps:
       - checkout
       - run: make -s test
