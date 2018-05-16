@@ -14,47 +14,43 @@ union Fp {
     Fp9 fp9;
 };
 
-static Val Fp_run( int n, const Val* x[] )
-{
-    assert( 2 <= n );
-    union Fp* p = (union Fp*)(x[0]->ptr);
-    switch (n-1) {
-    case 1: return p->fp1(*x[1]); /* ? */
-    case 2: return p->fp2(*x[1],*x[2]);
-    case 3: return p->fp3(*x[1],*x[2],*x[3]);
-    case 4: return p->fp4(*x[1],*x[2],*x[3],*x[4]);
-    case 5: return p->fp5(*x[1],*x[2],*x[3],*x[4],*x[5]);
-    case 6: return p->fp6(*x[1],*x[2],*x[3],*x[4],*x[5],*x[6]);
-    case 7: return p->fp7(*x[1],*x[2],*x[3],*x[4],*x[5],*x[6],*x[7]);
-    case 8: return p->fp8(*x[1],*x[2],*x[3],*x[4],*x[5],*x[6],*x[7],*x[8]);
-    case 9: return p->fp9(*x[1],*x[2],*x[3],*x[4],*x[5],*x[6],*x[7],*x[8],*x[9]);
-    default: return VAL(ERROR)("too much arguments");
-    }
-}
-
-static FnSt fp_run_delegate = {
-    .ref_cnt = -1,
-    .depth   = 0,
-    .funcptr = Fp_run,
-};
-
-static Fn Fp_fn( union Fp g )
+static Fn Fp_fn( Fn delegate, union Fp g )
 {
     union Fp* p = malloc( sizeof(union Fp) );
     assert( p );
     *p = g;
-    return Fn_bind1_v( &fp_run_delegate, VAL(D_PTR)(p) );
+    return Fn_bind1_v( delegate, VAL(D_PTR)(p) );
 }
 
-Fn1 fn1( Fp1 g ) { return (Fn1){ Fp_fn((union Fp){.fp1=g}) }; }
-Fn2 fn2( Fp2 g ) { return (Fn2){ Fp_fn((union Fp){.fp2=g}) }; }
-Fn3 fn3( Fp3 g ) { return (Fn3){ Fp_fn((union Fp){.fp3=g}) }; }
-Fn4 fn4( Fp4 g ) { return (Fn4){ Fp_fn((union Fp){.fp4=g}) }; }
-Fn5 fn5( Fp5 g ) { return (Fn5){ Fp_fn((union Fp){.fp5=g}) }; }
-Fn6 fn6( Fp6 g ) { return (Fn6){ Fp_fn((union Fp){.fp6=g}) }; }
-Fn7 fn7( Fp7 g ) { return (Fn7){ Fp_fn((union Fp){.fp7=g}) }; }
-Fn8 fn8( Fp8 g ) { return (Fn8){ Fp_fn((union Fp){.fp8=g}) }; }
-Fn9 fn9( Fp9 g ) { return (Fn9){ Fp_fn((union Fp){.fp9=g}) }; }
+static Val Fp1_run( int n, const Val* x[] ) { assert(n==2) ; return ((union Fp*)(x[0]->ptr))->fp1(*x[1]); }
+static Val Fp2_run( int n, const Val* x[] ) { assert(n==3) ; return ((union Fp*)(x[0]->ptr))->fp2(*x[1],*x[2]); }
+static Val Fp3_run( int n, const Val* x[] ) { assert(n==4) ; return ((union Fp*)(x[0]->ptr))->fp3(*x[1],*x[2],*x[3]); }
+static Val Fp4_run( int n, const Val* x[] ) { assert(n==5) ; return ((union Fp*)(x[0]->ptr))->fp4(*x[1],*x[2],*x[3],*x[4]); }
+static Val Fp5_run( int n, const Val* x[] ) { assert(n==6) ; return ((union Fp*)(x[0]->ptr))->fp5(*x[1],*x[2],*x[3],*x[4],*x[5]); }
+static Val Fp6_run( int n, const Val* x[] ) { assert(n==7) ; return ((union Fp*)(x[0]->ptr))->fp6(*x[1],*x[2],*x[3],*x[4],*x[5],*x[6]); }
+static Val Fp7_run( int n, const Val* x[] ) { assert(n==8) ; return ((union Fp*)(x[0]->ptr))->fp7(*x[1],*x[2],*x[3],*x[4],*x[5],*x[6],*x[7]); }
+static Val Fp8_run( int n, const Val* x[] ) { assert(n==9) ; return ((union Fp*)(x[0]->ptr))->fp8(*x[1],*x[2],*x[3],*x[4],*x[5],*x[6],*x[7],*x[8]); }
+static Val Fp9_run( int n, const Val* x[] ) { assert(n==10); return ((union Fp*)(x[0]->ptr))->fp9(*x[1],*x[2],*x[3],*x[4],*x[5],*x[6],*x[7],*x[8],*x[9]); }
+
+static FnSt Fp1_delegate = { .ref_cnt = -1, .depth = 0, .funcptr = Fp1_run };
+static FnSt Fp2_delegate = { .ref_cnt = -1, .depth = 0, .funcptr = Fp2_run };
+static FnSt Fp3_delegate = { .ref_cnt = -1, .depth = 0, .funcptr = Fp3_run };
+static FnSt Fp4_delegate = { .ref_cnt = -1, .depth = 0, .funcptr = Fp4_run };
+static FnSt Fp5_delegate = { .ref_cnt = -1, .depth = 0, .funcptr = Fp5_run };
+static FnSt Fp6_delegate = { .ref_cnt = -1, .depth = 0, .funcptr = Fp6_run };
+static FnSt Fp7_delegate = { .ref_cnt = -1, .depth = 0, .funcptr = Fp7_run };
+static FnSt Fp8_delegate = { .ref_cnt = -1, .depth = 0, .funcptr = Fp8_run };
+static FnSt Fp9_delegate = { .ref_cnt = -1, .depth = 0, .funcptr = Fp9_run };
+
+Fn1 fn1( Fp1 g ) { return (Fn1){ Fp_fn( &Fp1_delegate, (union Fp){.fp1=g} ) }; }
+Fn2 fn2( Fp2 g ) { return (Fn2){ Fp_fn( &Fp2_delegate, (union Fp){.fp2=g} ) }; }
+Fn3 fn3( Fp3 g ) { return (Fn3){ Fp_fn( &Fp3_delegate, (union Fp){.fp3=g} ) }; }
+Fn4 fn4( Fp4 g ) { return (Fn4){ Fp_fn( &Fp4_delegate, (union Fp){.fp4=g} ) }; }
+Fn5 fn5( Fp5 g ) { return (Fn5){ Fp_fn( &Fp5_delegate, (union Fp){.fp5=g} ) }; }
+Fn6 fn6( Fp6 g ) { return (Fn6){ Fp_fn( &Fp6_delegate, (union Fp){.fp6=g} ) }; }
+Fn7 fn7( Fp7 g ) { return (Fn7){ Fp_fn( &Fp7_delegate, (union Fp){.fp7=g} ) }; }
+Fn8 fn8( Fp8 g ) { return (Fn8){ Fp_fn( &Fp8_delegate, (union Fp){.fp8=g} ) }; }
+Fn9 fn9( Fp9 g ) { return (Fn9){ Fp_fn( &Fp9_delegate, (union Fp){.fp9=g} ) }; }
 
 Val Fp1_apply( Fp1 g, Val x ) { return g(x); }
 Val Fn1_apply( Fn1 g, Val x ) { return Fn_eval( Fn_bind1_v( g.f, x ) ); }
