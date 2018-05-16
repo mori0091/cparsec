@@ -1,0 +1,22 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: debian:stretch
+    steps:
+      - checkout
+      - run: make -s build
+  test:
+    docker:
+      - image: debian:stretch
+    steps:
+      - checkout
+      - run: make -s test
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - test:
+      	- requires:
+	  - build
