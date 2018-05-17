@@ -5,13 +5,15 @@ jobs:
       - image: buildpack-deps:18.04
     steps:
       - checkout
-      - run: make -s build
+      - run: CFLAGS=-coverage LDFLAGS=-fprofile-arcs make -s build
   test:
     docker:
       - image: buildpack-deps:18.04
     steps:
       - checkout
-      - run: make -s test
+      - run: CFLAGS=-coverage LDFLAGS=-fprofile-arcs make -s test
+      - run: gcov -abcflmpru $(find . -name '*.o')
+      - run: bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
 workflows:
   version: 2
   build_and_test:
