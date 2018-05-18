@@ -5,14 +5,33 @@ jobs:
       - image: buildpack-deps:18.04
     steps:
       - checkout
-      - run: CFLAGS=-coverage LDFLAGS=-fprofile-arcs make -s build
+      - run: make -s build
   test:
     docker:
       - image: buildpack-deps:18.04
     steps:
       - checkout
-      - run: CFLAGS=-coverage LDFLAGS=-fprofile-arcs make -s test
-      - run: gcov -abcflmpru $(find . -name '*.o')
+      - run: make -s test
+  coverage_default:
+    docker:
+      - image: buildpack-deps:18.04
+    steps:
+      - checkout
+      - run: CFLAGS='-coverage' LDLIBS='-lgcov' make DST_DIR='build/coverage/default' -s
+      - run: bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
+  coverage_debug:
+    docker:
+      - image: buildpack-deps:18.04
+    steps:
+      - checkout
+      - run: CFLAGS='-coverage -g -DDEBUG' LDLIBS='-lgcov' make DST_DIR='build/coverage/debug' -s
+      - run: bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
+  coverage_O2:
+    docker:
+      - image: buildpack-deps:18.04
+    steps:
+      - checkout
+      - run: CFLAGS='-coverage -O2' LDLIBS='-lgcov' make DST_DIR='build/coverage/O2' -s
       - run: bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
 workflows:
   version: 2
@@ -20,3 +39,8 @@ workflows:
     jobs:
       - build
       - test
+  coverage:
+    jobs:
+      - coverage_default
+      - coverage_debug
+      - coverage_O2
