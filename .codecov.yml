@@ -1,0 +1,2 @@
+ignore:
+  - "thirdparty"		# ignore coverage of thirdparty's code
