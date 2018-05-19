@@ -33,6 +33,13 @@ jobs:
       - checkout
       - run: CFLAGS='-coverage -O2' LDLIBS='-lgcov' make DST_DIR='build/coverage/O2' -s
       - run: bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
+  coverage_full:
+    docker:
+      - image: buildpack-deps:18.04
+    steps:
+      - checkout
+      - run: CFLAGS='-coverage' LDFLAGS='-coverage' make DST_DIR='build/coverage/full' -s
+      - run: bash <(curl -s https://codecov.io/bash) || echo "Codecov did not collect coverage reports"
 workflows:
   version: 2
   build_and_test:
@@ -44,3 +51,4 @@ workflows:
       - coverage_default
       - coverage_debug
       - coverage_O2
+      - coverage_full
