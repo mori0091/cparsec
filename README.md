@@ -1,4 +1,5 @@
 # cparsec - A PARSEr Combinator library for C language
+[![CircleCI](https://circleci.com/gh/mori0091/cparsec.svg?style=shield)](https://circleci.com/gh/mori0091/cparsec)
 [![codecov](https://codecov.io/gh/mori0091/cparsec/branch/master/graph/badge.svg)](https://codecov.io/gh/mori0091/cparsec)
 
 ## Features
